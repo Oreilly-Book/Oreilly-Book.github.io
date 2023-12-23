@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ipthon.club::Containers</title>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="python club,django,flask,syncio">
+  <meta name="author" content="ipython.club;kaotiai.com,youmoula.com">
+  <meta property="og:image" content="/static/img/favicon.ico">
+  <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
+  
+
+  
+  <!-- Bootstrap 3.3.6 -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet"></link>
+  <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet"></link>
+  
+
+</head>
+<body>
+<header class="header">
+  <nav class="navbar col-sm-offset-2">
+    <div class="container-fluid">
+        <div class=" navbar-header" >
+            <ul class="nav navbar-nav h2">
+                <li class="logo link-muted" style="padding-right: 0;margin-right:0">
+                    <img style="max-width:369px" class=" pull-left" onclick="window.location.href='/'"  src="/static/img/python.png" alt="Python" />
+                    <a class="pull-left h2 link-muted" href="/python3.5/">ipython.club</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+</header>
+
+<!--div class="container"-->
+<div class="container-fluid">
+  <div class="row-fluid">
+        <div class="col-9 col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-12 pr-5 pull-left">
+            <div class="box-title h2"> Containers</div>
+<!--            <div class="text-real" title="path">containers.html</div>-->
+<!--            <div class="text-truncate" title="ancestor-path">deployment.html</div>-->
+            <div class="text-body list-unstyled text-muted text-left">
+                <p>Containers are an <a href="/python3.5/operating-systems.html">operating system</a>-level
+isolation mechanism for running processes and other system resources from
+other containers and the base system.</p><h2>Are containers new?</h2><p>Containers are not conceptually new, dating back to around the 1970s, but
+they gained rapid adoption starting in 2012 when several Linux distributions
+began integrating containers tools generally made it more practical to
+use them. Previously, to use containers a developer would need to use a
+less common operating system or distribution customized with some sort of
+virtual machine feature. Using containers was basically not supported in typical
+deployment scenarios.</p><h3>Containers history and introduction</h3><p>The following resources do a great job of explaining where the containers
+concept came from, how they differ from virtual machines and why they are
+useful.</p><ul>
+<li>
+<p><a href="https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5">The Missing Introduction To Containerization</a>
+truly grants what its title sets out to do: give a wide-ranging overview
+and history of container concepts and tools. The post is dense but well
+worth the read to start learning about <code>chroot</code>, Solaris zones, LXC,
+<a href="/python3.5/docker.html">Docker</a> and how they've influenced each other throughout
+the past 40 years.</p>
+</li>
+<li>
+<p><a href="https://mesosphere.com/blog/brief-history-containers/">A brief history of containers</a>
+has some solid context for why containers have taken off in the last
+several years, including the integration of operating system container
+virtualization in most distributions as well as the creation of management
+tools such as <a href="/python3.5/docker.html">Docker</a>, Kubernetes, Docker Swarm and
+Mesosphere.</p>
+</li>
+<li>
+<p><a href="https://blog.jessfraz.com/post/containers-zones-jails-vms/">Setting the Record Straight: containers vs. Zones vs. Jails vs. VMs</a>
+compares and contrasts the designs of Linux containers, zones, jails
+and virtual machines. Containers typically take advantage of primitives
+but are more complicated because they have more individual parts put
+together while zones and jails are designed as top-level operating
+system components. There are advantages and disadvantages of these
+approaches that you should understand as you use each one.</p>
+</li>
+<li>
+<p><a href="https://mesosphere.com/blog/containers-distributed-systems/">Containers and Distributed Systems: Where They Came From and Where They’re Going</a>
+is an interview that digs into the past, present and future of
+containers based on the experience of Chuck McManis who has worked
+on building jails and other process isolation abstractions into
+operating systems.</p>
+</li>
+<li>
+<p><a href="https://zserge.com/posts/containers/">Linux containers in a few lines of code</a>
+shows how containers work by providing some code to run a busybox
+Docker image but without using docker. It then explains what's
+happening under the hood as you run basic commands such as <code>/bin/sh</code>.</p>
+</li>
+<li>
+<p><a href="https://developers.redhat.com/blog/2018/02/22/container-terminology-practical-introduction/">A Practical Introduction to Container Terminology</a>
+has both some solid introductory information on containers as well as
+a good description of terms such as container host, registry server,
+image layer, orchestration and many others that come up frequently
+when using containers.</p>
+</li>
+<li>
+<p><a href="https://ericchiang.github.io/post/containers-from-scratch/">Containers from scratch</a>
+explains how Linux features such as <code>cgroups</code>, <code>chroot</code> and namespaces
+are used by container implementations.</p>
+</li>
+<li>
+<p><a href="https://iximiuz.com/en/posts/container-networking-is-simple/">Container networking is simple</a>
+shows that container networking is nothing more than a simple combination
+of the well-known Linux facilities such as network namespaces, virtual
+Ethernet devices (veth), virtual network switches (bridge) and
+IP routing and network address translation (NAT).</p>
+</li>
+<li>
+<p><a href="https://jvns.ca/blog/2016/10/26/running-container-without-docker/">Running containers without Docker</a>
+reviews a migration path for an organization that already has a bunch of
+infrastructure but sees advantages in using containers. However, the
+author explains why you can use containers without Docker even if you
+eventually plan to use Docker, Kubernetes or other container tools and
+orchestration layer.</p>
+</li>
+<li>
+<p><a href="https://www.datadoghq.com/container-report/">Datadog's 2020 Container Report</a>
+contains some interesting statistics about container usage across
+their customer base, such as <a href="/python3.5/kubernetes.html">Kubernetes</a> adoption
+and container deployments by cloud platform.</p>
+</li>
+<li>
+<p><a href="https://github.com/tonybaloney/mocker">mocker</a> is a Docker imitation
+open source project written in all Python which is intended for learning
+purposes.</p>
+</li>
+</ul><h3>Working with containers</h3><p>You can get started using containers once you understand some of the
+terminology and work through a couple of introductory tutorials like the ones
+listed above. Check out the below resources when you want to do more advanced
+configurations and dig deeper into how containers work.</p><ul>
+<li>
+<p><a href="https://blog.lizzie.io/linux-containers-in-500-loc.html">Linux containers in 500 lines of code</a>
+is a bonkers in-depth post about building your own simplified, but not
+simple version of Docker to learn how it works.</p>
+</li>
+<li>
+<p><a href="http://crunchtools.com/comparison-linux-container-images/">A Comparison of Linux Container Images</a>
+presents data on many of the frequently-used base container images.</p>
+</li>
+<li>
+<p><a href="https://cloudplatform.googleblog.com/2018/07/7-best-practices-for-building-containers.html">7 best practices for building containers</a>
+provides Google's recommendations for creating containers such as
+include only a single application per container, make sure to use
+descriptive tags and build the smallest image size possible.</p>
+</li>
+<li>
+<p><a href="https://blog.kintoandar.com/2018/01/Building-healthier-containers.html">Building healthier containers</a>
+examines how <a href="/python3.5/docker.html">Docker containers</a> are different from
+virtual machines and digs into dependencies that can be included in
+your container image if you do not know how to properly build them.</p>
+</li>
+<li>
+<p><a href="https://l0rd.github.io/containerspatterns/">Containers patterns</a>
+covers common usage patterns that have developed now that containers
+have been in development workflows for a few years.</p>
+</li>
+</ul><h3>Container security resources</h3><p>Container security is a hot topic because there are so many ways of screwing
+it up, just like any infrastructure that runs your applications. These
+resources explain security considerations specific to containers.</p><ul>
+<li>
+<p><a href="https://cloudberry.engineering/article/practical-introduction-container-security/">A Practical Introduction to Container Security</a>
+examines security at build time for projects and how to
+minimize the risk of supply chain attack. It then goes into
+infrastructure and runtime security where you need to understand
+different attack vectors and minimize malicious attempts against
+your containers during these phases..</p>
+</li>
+<li>
+<p><a href="https://blog.jessfraz.com/post/building-container-images-securely-on-kubernetes/">Building Container Images Securely on Kubernetes</a>
+discusses some of the issues with building containers and why the
+author created <a href="https://github.com/genuinetools/img">img</a> as a tool
+to help solve the problems she was seeing.</p>
+</li>
+<li>
+<p><a href="https://docs.google.com/presentation/d/1x0DfyC8OxTHsiqf6YRGmqS63CjqCs8-613T_Dzdyi0Q/mobilepresent?slide=id.p">Making security invisible</a>
+is a great presentation that covers sandboxes, Seccomp and other
+concepts for isolating potentially unsafe code to limit attack scope.</p>
+</li>
+<li>
+<p><a href="https://opensource.com/article/17/10/10-layers-container-security">10 layers of Linux container security</a>
+explains many of the attack vectors you need to be aware of when you
+are working with containers.</p>
+</li>
+</ul><h3>What do you want to learn next about web development?</h3>
+            </div>
+
+        </div>
+        <div class="col-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-0 pull-right">
+        <!-- 3rd column start  -->
+            <ul class="list-group-horizontal">
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Introduction" href="/python3.5/introduction.html">
+                    Introduction
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Development Environments" href="/python3.5/development-environments.html">
+                    Development Environments
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="DevOps" href="/python3.5/devops.html">
+                    DevOps
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Deployment" href="/python3.5/deployment.html">
+                    Deployment
+                </a>
+                
+                <div style="padding-inline-start: 2.1em;">
+                <p>&nbsp;</p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Google Cloud Functions" href="/python3.5/google-cloud-functions.html">
+                    Google Cloud Functions
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Azure Functions" href="/python3.5/azure-functions.html">
+                    Azure Functions
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="AWS Lambda" href="/python3.5/aws-lambda.html">
+                    AWS Lambda
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Kubernetes" href="/python3.5/kubernetes.html">
+                    Kubernetes
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Docker" href="/python3.5/docker.html">
+                    Docker
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Salt" href="/python3.5/salt.html">
+                    Salt
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Ansible" href="/python3.5/ansible.html">
+                    Ansible
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="GoCD" href="/python3.5/gocd-continuous-integration.html">
+                    GoCD
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Jenkins" href="/python3.5/jenkins.html">
+                    Jenkins
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="mod_wsgi" href="/python3.5/mod-wsgi.html">
+                    mod_wsgi
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="uWSGI" href="/python3.5/uwsgi.html">
+                    uWSGI
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Green Unicorn (Gunicorn)" href="/python3.5/green-unicorn-gunicorn.html">
+                    Green Unicorn (Gunicorn)
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Caddy" href="/python3.5/caddy.html">
+                    Caddy
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Nginx" href="/python3.5/nginx.html">
+                    Nginx
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Apache HTTP Server" href="/python3.5/apache-http-server.html">
+                    Apache HTTP Server
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Windows" href="/python3.5/microsoft-windows.html">
+                    Windows
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="FreeBSD" href="/python3.5/freebsd.html">
+                    FreeBSD
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="macOS" href="/python3.5/macos.html">
+                    macOS
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Ubuntu" href="/python3.5/ubuntu.html">
+                    Ubuntu
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="AWS CodeStar" href="/python3.5/aws-codestar.html">
+                    AWS CodeStar
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="PythonAnywhere" href="/python3.5/pythonanywhere.html">
+                    PythonAnywhere
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Heroku" href="/python3.5/heroku.html">
+                    Heroku
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Lightsail" href="/python3.5/lightsail.html">
+                    Lightsail
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="DigitalOcean" href="/python3.5/digitalocean.html">
+                    DigitalOcean
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Linode" href="/python3.5/linode.html">
+                    Linode
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Content Delivery Networks (CDNs)" href="/python3.5/content-delivery-networks-cdns.html">
+                    Content Delivery Networks (CDNs)
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Static Content" href="/python3.5/static-content.html">
+                    Static Content
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Servers" href="/python3.5/servers.html">
+                    Servers
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Serverless" href="/python3.5/serverless.html">
+                    Serverless
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       class="text-muted"
+                       alt="Containers" href="/python3.5/containers.html">
+                    Containers
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Configuration Management" href="/python3.5/configuration-management.html">
+                    Configuration Management
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Continuous Integration" href="/python3.5/continuous-integration.html">
+                    Continuous Integration
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="WSGI Servers" href="/python3.5/wsgi-servers.html">
+                    WSGI Servers
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Web Servers" href="/python3.5/web-servers.html">
+                    Web Servers
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Operating Systems" href="/python3.5/operating-systems.html">
+                    Operating Systems
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Platform-as-a-service" href="/python3.5/platform-as-a-service.html">
+                    Platform-as-a-service
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Virtual Private Servers (VPS)" href="/python3.5/virtual-private-servers-vps.html">
+                    Virtual Private Servers (VPS)
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Hosting" href="/python3.5/hosting.html">
+                    Hosting
+                    </a>
+                </p>
+                
+                </div>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Web Development" href="/python3.5/web-development.html">
+                    Web Development
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Data" href="/python3.5/data.html">
+                    Data
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Code Examples" href="/python3.5/code-examples.html">
+                    Code Examples
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Meta" href="/python3.5/meta.html">
+                    Meta
+                </a>
+                
+
+            </li>
+            
+            </ul>
+        <!-- 3 -->
+         </div>
+
+  </div>
+
+</div>
+
+
+<footer class="container-fluid row">
+   <div class="text-right col-lg-12 col-md-12 col-sm-12" style="
+    line-height: 4.2em;
+    height: fit-content;
+    margin-bottom:2em;">
+           <div class=" right text-secondary">
+               <span>
+               <strong>2014-<script>document.write(new Date().getFullYear())</script>
+                   <a href="https://www.ipython.club">ipython.club</a></strong>
+               </span>
+            </div>
+  </div>
+</footer>
+
+
+<!-- jQuery 2.2.3 -->
+<script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+<!-- Bootstrap 3.3.6 -->
+<script src="/static/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+</body>
+</html>

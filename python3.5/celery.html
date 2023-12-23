@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ipthon.club::Celery</title>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="python club,django,flask,syncio">
+  <meta name="author" content="ipython.club;kaotiai.com,youmoula.com">
+  <meta property="og:image" content="/static/img/favicon.ico">
+  <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
+  
+
+  
+  <!-- Bootstrap 3.3.6 -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet"></link>
+  <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet"></link>
+  
+
+</head>
+<body>
+<header class="header">
+  <nav class="navbar col-sm-offset-2">
+    <div class="container-fluid">
+        <div class=" navbar-header" >
+            <ul class="nav navbar-nav h2">
+                <li class="logo link-muted" style="padding-right: 0;margin-right:0">
+                    <img style="max-width:369px" class=" pull-left" onclick="window.location.href='/'"  src="/static/img/python.png" alt="Python" />
+                    <a class="pull-left h2 link-muted" href="/python3.5/">ipython.club</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+</header>
+
+<!--div class="container"-->
+<div class="container-fluid">
+  <div class="row-fluid">
+        <div class="col-9 col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-12 pr-5 pull-left">
+            <div class="box-title h2"> Celery</div>
+<!--            <div class="text-real" title="path">celery.html</div>-->
+<!--            <div class="text-truncate" title="ancestor-path">web-development.html</div>-->
+            <div class="text-body list-unstyled text-muted text-left">
+                <p><a href="http://www.celeryproject.org/">Celery</a> is a <a href="/python3.5/task-queues.html">task queue</a>
+implementation for <a href="/python3.5/web-development.html">Python web applications</a> used
+to asynchronously execute work outside the HTTP request-response cycle.</p><h2>Why is Celery useful?</h2><p><a href="/python3.5/task-queues.html">Task queues</a> and the Celery implementation in particular
+are one of the trickier parts of a Python web application stack to
+understand. </p><p>If you are a junior developer it can be unclear why moving work
+outside the HTTP request-response cycle is important. In short, you want your <a href="/python3.5/wsgi-servers.html">WSGI server</a> to respond to incoming requests as quickly
+as possible because each request ties up a worker process until the response
+is finished. Moving work off those workers by spinning up asynchronous jobs
+as tasks in a queue is a straightforward way to improve WSGI server response
+times.</p><h2>What's the difference between Celeryd and Celerybeat?</h2><p>Celery can be used to run batch jobs in the background on a
+regular schedule. A key concept in Celery is the difference between the
+Celery daemon (celeryd), which executes tasks, Celerybeat, which is a
+scheduler. Think of Celeryd as a tunnel-vision set of one or more workers
+that handle whatever tasks you put in front of them. Each worker will
+perform a task and when the task is completed will pick up the next one.
+The cycle will repeat continously, only waiting idly when there are no more
+tasks to put in front of them.</p><p>Celerybeat on the other hand is like a boss who keeps track of when tasks
+should be executed. Your application can tell Celerybeat to execute a task
+at time intervals, such as every 5 seconds or once a week. Celerybeat can
+also be instructed to run tasks on a specific date or time, such as 5:03pm
+every Sunday. When the interval or specific time is hit, Celerybeat will
+hand the job over to Celeryd to execute on the next available worker.</p><h3>Celery tutorials and advice</h3><p>Celery is a powerful tool that can be difficult to wrap your mind around
+at first. Be sure to read up on <a href="/python3.5/task-queues.html">task queue</a> concepts
+then dive into these specific Celery tutorials.</p><ul>
+<li>
+<p><a href="https://www.youtube.com/watch?v=68QWZU_gCDA">A 4 Minute Intro to Celery</a> is
+a short introductory task queue screencast.</p>
+</li>
+<li>
+<p>This blog post series on
+<a href="https://www.vinta.com.br/blog/2017/celery-overview-archtecture-and-how-it-works/">Celery's architecture</a>,
+<a href="https://www.vinta.com.br/blog/2018/celery-wild-tips-and-tricks-run-async-tasks-real-world/">Celery in the wild: tips and tricks to run async tasks in the real world</a>
+and
+<a href="https://www.vinta.com.br/blog/2018/dealing-resource-consuming-tasks-celery/">dealing with resource-consuming tasks on Celery</a>
+provide great context for how Celery works and how to handle some of the
+trickier bits to working with the task queue.</p>
+</li>
+<li>
+<p><a href="https://www.digitalocean.com/community/articles/how-to-use-celery-with-rabbitmq-to-queue-tasks-on-an-ubuntu-vps">How to use Celery with RabbitMQ</a>
+is a detailed walkthrough for using these tools on an Ubuntu VPS.</p>
+</li>
+<li>
+<p><a href="https://denibertovic.com/posts/celery-best-practices/">Celery - Best Practices</a>
+explains things you should not do with Celery and shows some underused
+features for making task queues easier to work with.</p>
+</li>
+<li>
+<p><a href="https://blog.balthazar-rouberol.com/celery-best-practices">Celery Best Practices</a>
+is a different author's follow up to the above best practices post that
+builds upon some of his own learnings from 3+ years using Celery.</p>
+</li>
+<li>
+<p><a href="https://adamj.eu/tech/2020/02/03/common-celery-issues-on-django-projects/">Common Issues Using Celery (And Other Task Queues)</a>
+contains good advice about mistakes to avoid in your task configurations,
+such as database transaction usage and retrying failed tasks.</p>
+</li>
+<li>
+<p><a href="http://blog.thecodepath.com/2012/11/15/asynchronous-processing-in-web-applications-part-1-a-database-is-not-a-queue/">Asynchronous Processing in Web Applications Part One</a>
+and <a href="http://blog.thecodepath.com/2013/01/06/asynchronous-processing-in-web-applications-part-2-developers-need-to-understand-message-queues/">Part Two</a>
+are great reads for understanding the difference between a task queue and
+why you shouldn't use your database as one.</p>
+</li>
+<li>
+<p><a href="https://theblog.workey.co/my-experiences-with-a-long-running-celery-based-microprocess-b2cc30da94f5">My Experiences With A Long-Running Celery-Based Microprocess</a>
+gives some good tips and advice based on experience with Celery workers
+that take a long time to complete their jobs.</p>
+</li>
+<li>
+<p><a href="http://celerytaskschecklist.com/">Checklist to build great Celery async tasks</a>
+is a site specifically designed to give you a list of good practices to
+follow as you design your task queue configuration and deploy to
+development, staging and production environments.</p>
+</li>
+<li>
+<p>Heroku wrote about how to
+<a href="https://engineering.heroku.com/blogs/2014-09-15-securing-celery">secure Celery</a>
+when tasks are otherwise sent over unencrypted networks.</p>
+</li>
+<li>
+<p><a href="https://www.python-celery.com/2018/05/01/unit-testing-celery-tasks/">Unit testing Celery tasks</a>
+explains three strategies for testing code within functions that Celery
+executes. The post concludes that calling Celery tasks synchronously to test
+them is the best strategy without any downsides. However, keep in mind that
+any testing method that is not the same as how the function will execute
+in a production environment can potentially lead to overlooked bugs. There
+is also an
+<a href="https://github.com/ZoomerAnalytics/python-celery-unit-testing">open source Git repository with all of the source code</a>
+from the post.</p>
+</li>
+<li>
+<p><a href="https://www.mattlayman.com/blog/2017/django-celery-rollbar/">Rollbar monitoring of Celery in a Django app</a>
+explains how to use <a href="/python3.5/rollbar.html">Rollbar</a> to monitor tasks. Super
+useful when workers invariably die for no apparent reason.</p>
+</li>
+<li>
+<p><a href="https://wiredcraft.com/blog/3-gotchas-for-celery/">3 Gotchas for Working with Celery</a>
+are things to keep in mind when you're new to the Celery task queue
+implementation.</p>
+</li>
+<li>
+<p><a href="http://matthewrocklin.com/blog/work/2016/09/13/dask-and-celery">Dask and Celery</a>
+compares Dask.distributed with Celery for Python projects. The post gives
+code examples to show how to execute tasks with either task queue.</p>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/questions/3901101/pythoncelery-chaining-jobs">Python+Celery: Chaining jobs?</a>
+explains that Celery tasks should be dependent upon each other using
+Celery chains, not direct dependencies between tasks.</p>
+</li>
+</ul><h3>Celery with web frameworks</h3><p>Celery is typically used with a <a href="/python3.5/web-frameworks.html">web framework</a> such as
+<a href="/python3.5/django.html">Django</a>, <a href="/python3.5/flask.html">Flask</a> or <a href="/python3.5/pyramid.html">Pyramid</a>.
+These resources show you how to integrate the Celery task queue with the
+web framework of your choice.</p><ul>
+<li>
+<p><a href="https://simpleisbetterthancomplex.com/tutorial/2017/08/20/how-to-use-celery-with-django.html">How to Use Celery and RabbitMQ with Django</a>
+is a great tutorial that shows how to both install and set up a basic
+task with Django.</p>
+</li>
+<li>
+<p>Miguel Grinberg wrote a nice post on using the
+<a href="http://blog.miguelgrinberg.com/post/using-celery-with-flask">task queue Celery with Flask</a>.
+He gives an overview of Celery followed by specific code to set up the task
+queue and integrate it with Flask.</p>
+</li>
+<li>
+<p><a href="http://michal.karzynski.pl/blog/2014/05/18/setting-up-an-asynchronous-task-queue-for-django-using-celery-redis/">Setting up an asynchronous task queue for Django using Celery and Redis</a>
+is a straightforward tutorial for setting up the Celery task queue for
+Django web applications using the Redis broker on the back end.</p>
+</li>
+<li>
+<p><a href="https://hashedin.com/a-guide-to-sending-scheduled-reports-via-email-using-django-and-celery/">A Guide to Sending Scheduled Reports Via Email Using Django And Celery</a>
+shows you how to use
+<a href="https://github.com/celery/django-celery">django-celery</a>
+in your application. Note however there are other ways of integrating
+Celery with Django that do not require the django-celery dependency.</p>
+</li>
+<li>
+<p><a href="http://allynh.com/blog/flask-asynchronous-background-tasks-with-celery-and-redis/">Flask asynchronous background tasks with Celery and Redis</a>
+combines Celery with <a href="/python3.5/redis.html">Redis</a> as the broker and
+<a href="/python3.5/flask.html">Flask</a> for the example application's framework.</p>
+</li>
+<li>
+<p><a href="https://www.revsys.com/tidbits/celery-and-django-and-docker-oh-my/">Celery and Django and Docker: Oh My!</a>
+shows how to create Celery tasks for Django within a <a href="/python3.5/docker.html">Docker</a>
+container. It also provides some </p>
+</li>
+<li>
+<p><a href="https://realpython.com/blog/python/asynchronous-tasks-with-django-and-celery/">Asynchronous Tasks With Django and Celery</a>
+shows how to integrate Celery with <a href="/python3.5/django.html">Django</a> and create Periodic Tasks.</p>
+</li>
+<li>
+<p><a href="http://www.caktusgroup.com/blog/2014/06/23/scheduling-tasks-celery/">Getting Started Scheduling Tasks with Celery</a>
+is a detailed walkthrough for setting up Celery with Django (although
+Celery can also be used without a problem with other frameworks).</p>
+</li>
+<li>
+<p><a href="http://www.linuxforu.com/2013/12/introducing-celery-pythondjango/">Introducing Celery for Python+Django</a>
+provides an introduction to the Celery task queue with Django as the
+intended framework for building a web application.</p>
+</li>
+<li>
+<p><a href="https://testdriven.io/asynchronous-tasks-with-falcon-and-celery">Asynchronous Tasks with Falcon and Celery</a>
+configures Celery with the <a href="/python3.5/falcon.html">Falcon</a> framework, which is
+less commonly-used in web tutorials.</p>
+</li>
+<li>
+<p><a href="https://www.distributedpython.com/2018/09/28/celery-task-states/">Custom Celery task states</a>
+is an advanced post on creating custom states, which is especially useful
+for transient states in your application that are not covered by the
+default Celery configuration.</p>
+</li>
+<li>
+<p><a href="https://testdriven.io/blog/django-and-celery/">Asynchronous Tasks with Django and Celery</a>
+looks at how to configure Celery to handle long-running tasks in a
+Django app.</p>
+</li>
+</ul><h3>Celery deployment resources</h3><p>Celery and its broker run separately from your web and WSGI servers so it
+adds some additional complexity to your <a href="/python3.5/deployment.html">deployments</a>. The
+following resources walk you through how to handle deployments and get the
+right configuration settings in place.</p><ul>
+<li>
+<p>The "Django in Production" series by
+<a href="https://twitter.com/robgolding63">Rob Golding</a> contains a post
+specifically on <a href="http://www.robgolding.com/blog/2011/11/27/django-in-production-part-2---background-tasks/">Background Tasks</a>.</p>
+</li>
+<li>
+<p><a href="https://pythad.github.io/articles/2016-12/how-to-run-celery-as-a-daemon-in-production">How to run celery as a daemon?</a>
+is a short post with the minimal code for running the Celery daemon and
+Celerybeat as system services on Linux.</p>
+</li>
+<li>
+<p><a href="http://www.caktusgroup.com/blog/2014/09/29/celery-production/">Celery in Production</a>
+on the Caktus Group blog contains good practices from their experience
+using Celery with RabbitMQ, monitoring tools and other aspects not often
+discussed in existing documentation.</p>
+</li>
+<li>
+<p><a href="https://library.launchkit.io/three-quick-tips-from-two-years-with-celery-c05ff9d7f9eb">Three quick tips from two years with Celery</a>
+provides some solid advice on retry delays, the <code>-Ofair</code> flag and global
+task timeouts for Celery.</p>
+</li>
+</ul><h3>Do you want to learn more about task queues, or another topic?</h3>
+            </div>
+
+        </div>
+        <div class="col-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-0 pull-right">
+        <!-- 3rd column start  -->
+            <ul class="list-group-horizontal">
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Introduction" href="/python3.5/introduction.html">
+                    Introduction
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Development Environments" href="/python3.5/development-environments.html">
+                    Development Environments
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="DevOps" href="/python3.5/devops.html">
+                    DevOps
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Deployment" href="/python3.5/deployment.html">
+                    Deployment
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Web Development" href="/python3.5/web-development.html">
+                    Web Development
+                </a>
+                
+                <div style="padding-inline-start: 2.1em;">
+                <p>&nbsp;</p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Flask" href="/python3.5/flask.html">
+                    Flask
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Django" href="/python3.5/django.html">
+                    Django
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Cross-Site Request Forgery (CSRF)" href="/python3.5/cross-site-request-forgery-csrf.html">
+                    Cross-Site Request Forgery (CSRF)
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="SQL Injection" href="/python3.5/sql-injection.html">
+                    SQL Injection
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Okta" href="/python3.5/okta.html">
+                    Okta
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Slack" href="/python3.5/slack.html">
+                    Slack
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Stripe" href="/python3.5/stripe.html">
+                    Stripe
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Twilio" href="/python3.5/twilio.html">
+                    Twilio
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Django REST Framework" href="/python3.5/django-rest-framework-drf.html">
+                    Django REST Framework
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="API Frameworks" href="/python3.5/api-frameworks.html">
+                    API Frameworks
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Bots" href="/python3.5/bots.html">
+                    Bots
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Webhooks" href="/python3.5/webhooks.html">
+                    Webhooks
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Microservices" href="/python3.5/microservices.html">
+                    Microservices
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="WebRTC" href="/python3.5/webrtc.html">
+                    WebRTC
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="WebSockets" href="/python3.5/websockets.html">
+                    WebSockets
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="HTTPS" href="/python3.5/https.html">
+                    HTTPS
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Code Metrics" href="/python3.5/code-metrics.html">
+                    Code Metrics
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Debugging" href="/python3.5/debugging.html">
+                    Debugging
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Integration Testing" href="/python3.5/integration-testing.html">
+                    Integration Testing
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Unit Testing" href="/python3.5/unit-testing.html">
+                    Unit Testing
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="MkDocs" href="/python3.5/mkdocs.html">
+                    MkDocs
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Lektor" href="/python3.5/lektor.html">
+                    Lektor
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Pelican" href="/python3.5/pelican.html">
+                    Pelican
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Dramatiq" href="/python3.5/dramatiq.html">
+                    Dramatiq
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Redis Queue (RQ)" href="/python3.5/redis-queue-rq.html">
+                    Redis Queue (RQ)
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       class="text-muted"
+                       alt="Celery" href="/python3.5/celery.html">
+                    Celery
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Angular" href="/python3.5/angular.html">
+                    Angular
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Vue.js" href="/python3.5/vuejs.html">
+                    Vue.js
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="React" href="/python3.5/react.html">
+                    React
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Foundation" href="/python3.5/foundation-css.html">
+                    Foundation
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Bootstrap" href="/python3.5/bootstrap-css.html">
+                    Bootstrap
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Minification" href="/python3.5/minification.html">
+                    Minification
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Responsive Design" href="/python3.5/responsive-design.html">
+                    Responsive Design
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Cascading Style Sheets (CSS)" href="/python3.5/cascading-style-sheets.html">
+                    Cascading Style Sheets (CSS)
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Hypertext Markup Language (HTML)" href="/python3.5/hypertext-markup-language-html.html">
+                    Hypertext Markup Language (HTML)
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Django Templates" href="/python3.5/django-templates.html">
+                    Django Templates
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Mako" href="/python3.5/mako.html">
+                    Mako
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Jinja2" href="/python3.5/jinja2.html">
+                    Jinja2
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Other Web Frameworks" href="/python3.5/other-web-frameworks.html">
+                    Other Web Frameworks
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Sanic" href="/python3.5/sanic.html">
+                    Sanic
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Morepath" href="/python3.5/morepath.html">
+                    Morepath
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Falcon" href="/python3.5/falcon.html">
+                    Falcon
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="TurboGears" href="/python3.5/turbogears.html">
+                    TurboGears
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Pyramid" href="/python3.5/pyramid.html">
+                    Pyramid
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Bottle" href="/python3.5/bottle.html">
+                    Bottle
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Web Application Security" href="/python3.5/web-application-security.html">
+                    Web Application Security
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="API Integration" href="/python3.5/api-integration.html">
+                    API Integration
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="API Creation" href="/python3.5/api-creation.html">
+                    API Creation
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Application Programming Interfaces" href="/python3.5/application-programming-interfaces.html">
+                    Application Programming Interfaces
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Networking" href="/python3.5/networking.html">
+                    Networking
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Testing" href="/python3.5/testing.html">
+                    Testing
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Static Site Generators" href="/python3.5/static-site-generator.html">
+                    Static Site Generators
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Task Queues" href="/python3.5/task-queues.html">
+                    Task Queues
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="JavaScript" href="/python3.5/javascript.html">
+                    JavaScript
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="CSS Frameworks" href="/python3.5/css-frameworks.html">
+                    CSS Frameworks
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Web Design" href="/python3.5/web-design.html">
+                    Web Design
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Template Engines" href="/python3.5/template-engines.html">
+                    Template Engines
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Web Frameworks" href="/python3.5/web-frameworks.html">
+                    Web Frameworks
+                    </a>
+                </p>
+                
+                </div>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Data" href="/python3.5/data.html">
+                    Data
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Code Examples" href="/python3.5/code-examples.html">
+                    Code Examples
+                </a>
+                
+
+            </li>
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Meta" href="/python3.5/meta.html">
+                    Meta
+                </a>
+                
+
+            </li>
+            
+            </ul>
+        <!-- 3 -->
+         </div>
+
+  </div>
+
+</div>
+
+
+<footer class="container-fluid row">
+   <div class="text-right col-lg-12 col-md-12 col-sm-12" style="
+    line-height: 4.2em;
+    height: fit-content;
+    margin-bottom:2em;">
+           <div class=" right text-secondary">
+               <span>
+               <strong>2014-<script>document.write(new Date().getFullYear())</script>
+                   <a href="https://www.ipython.club">ipython.club</a></strong>
+               </span>
+            </div>
+  </div>
+</footer>
+
+
+<!-- jQuery 2.2.3 -->
+<script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+<!-- Bootstrap 3.3.6 -->
+<script src="/static/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+</body>
+</html>

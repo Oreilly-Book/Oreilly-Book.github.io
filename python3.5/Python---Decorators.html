@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ipthon.club::Python - Decorators</title>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="python club,django,flask,syncio">
+  <meta name="author" content="ipython.club;kaotiai.com,youmoula.com">
+  <meta property="og:image" content="/static/img/favicon.ico">
+  <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
+  
+
+  
+  <!-- Bootstrap 3.3.6 -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet"></link>
+  <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet"></link>
+  
+
+</head>
+<body>
+<header class="header">
+  <nav class="navbar col-sm-offset-2">
+    <div class="container-fluid">
+        <div class=" navbar-header" >
+            <ul class="nav navbar-nav h2">
+                <li class="logo link-muted" style="padding-right: 0;margin-right:0">
+                    <img style="max-width:369px" class=" pull-left" onclick="window.location.href='/'"  src="/static/img/python.png" alt="Python" />
+                    <a class="pull-left h2 link-muted" href="/python3.5/">ipython.club</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+</header>
+
+<!--div class="container"-->
+<div class="container-fluid">
+  <div class="row-fluid">
+        <div class="col-9 col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-12 pr-5 pull-left">
+            <div class="box-title h2"> Python - Decorators</div>
+<!--            <div class="text-real" title="path">Python---Decorators.html</div>-->
+<!--            <div class="text-truncate" title="ancestor-path">tutoral.html</div>-->
+            <div class="text-body list-unstyled text-muted text-left">
+                     
+             <div class="gcse-search"></div>          
+         
+
+
+ 
+ 
+<h1><strong>Python - Decorators</strong></h1>
+<!-- blank -->
+
+
+<hr class="m-1">
+
+
+Previous Page
+<hr class="m-1 mb-4">
+
+
+<p><b>Decorators</b> are powerful and useful tool in Python. It adds functionality to an existing code and modify the behaviour of the code while compiling it. for example - It allows a programmer to wrap a function (a.k.a wrapper function) around a given function (a.k.a wrapped function) in order to modify the behavior of the given function, without permanently modifying it.</p>
+
+<h2>Create a Decorator</h2>
+<p>The decorator is created exactly same as any function in python and takes function as an argument. Inside decorator, a wrapper function is created which is wrapped around the function which is passed as an argument. Please see the syntax below:</p>
+<h3>Syntax</h3><br>
+<div class="acscode">
+<div class="titlebox"><i class="fa fa-pencil" style="font-size:16px;color:red"></i></div><p></p>
+<pre class="prettyprint notranslate">
+# defining decorator
+def decorator_name(funct):
+  def wrapper_function():
+    statements
+    funct
+    statements
+  return wrapped_function
+</pre>
+</div>
+
+<h2>Use a Decorator</h2>
+<p>To use a decorator with a function, a line containing <i>@decorator name</i> must be added above the function definition as shown in syntax below. Along with this, The argument definition of wrapped function must match inside and outside of the decorator.</p>
+<h3>Syntax</h3><br>
+<div class="acscode">
+  <div class="titlebox"><i class="fa fa-pencil" style="font-size:16px;color:red"></i></div><p></p>  
+<pre class="prettyprint notranslate">
+# use decorator with wrapped function
+@decorator_name
+def wrapped_function():
+  statements
+</pre>
+</div>
+<br>
+
+<h3>Example: function with no argument and not a return type</h3>
+<p>In the below example, a decorator called <i>MyDecorator</i> is created. Inside it, a wrapper function called <i>MyWrapperFunction</i> is created which prints a message just before and after execution of the wrapped function called <i>MyFunction</i>. The argument definition of wrapped function must match inside and outside of the decorator.</p>
+<div class="acscode">
+  <div class="linkbox" onclick="compile_online('python','topics-ex181')">Example</div><p></p> 
+<pre class="prettyprint notranslate">
+def MyDecorator(funct):
+  def MyWrapperFunction():
+    print("Before Execution.")
+    funct()
+    print("After Execution.")
+  return MyWrapperFunction
+
+@MyDecorator
+def MyFunction():
+  print("Hello World!.")
+
+MyFunction()
+</pre>
+</div>
+<br>
+<div class="acscode">
+<div class="titlebox">Output</div><p></p>
+<pre>
+Before Execution.
+Hello World!.
+After Execution.
+</pre>
+</div>
+<br>
+
+<h3>Example: function with arguments and not a return type</h3>
+<p>In the below example, wrapped function called <i>MyFunction</i> takes two numbers as arguments and prints the sum of those numbers with a given message. As mentioned above, the argument definition of the wrapped function must match inside and outside the decorator, hence <i>a</i> and <i>b</i> arguments are passed through wrapper function which is again passed through wrapped function inside the decorator. In this example, the wrapper function is defined to calculate the time taken by wrapped function to perform the execution of given task.</p>
+<div class="acscode">
+  <div class="linkbox" onclick="compile_online('python','topics-ex182')">Example</div><p></p> 
+<pre class="prettyprint notranslate">
+import time
+
+def MyDecorator(funct):
+  def MyWrapperFunction(a, b):
+    start = time.time()
+    funct(a, b)
+    end = time.time()
+    # 1 is added because the execution time is very small.
+    print("Time taken by", funct.__name__, "is", 1+end-start)
+  return MyWrapperFunction
+
+@MyDecorator
+def MyFunction(a, b):
+  print("sum of", a, "and", b, "is", a+b, ".")
+
+MyFunction(15, 10)
+</pre>
+</div>
+<br>
+<div class="acscode">
+<div class="titlebox">Output</div><p></p>
+<pre>
+sum of 15 and 10 is 25 .
+Time taken by MyFunction is 1.000011
+</pre>
+</div>
+
+
+<br>
+<h3>Example: function with arguments and a return type</h3>
+<p>In the below example, wrapped function called <i>MyFunction</i> returns value. Hence, there must be a return statement inside the wrapper function to get return from wrapped function. Please note that, in this example, <i>*arg, **kwarg</i> parameters are used to match with the argument definition of wrapped function.</p>
+<div class="acscode">
+  <div class="linkbox" onclick="compile_online('python','topics-ex183')">Example</div><p></p> 
+<pre class="prettyprint notranslate">
+def MyDecorator(funct):
+  def MyWrapperFunction(*arg, **kwarg):
+    print("Before Execution.") 
+    abc = funct(*arg, **kwarg)
+    print("After Execution.") 
+    return abc
+  return MyWrapperFunction
+
+@MyDecorator
+def MyFunction(a, b, c):
+  print("Inside wrapped function.")
+  return a + b + c
+
+x = MyFunction(15, 10, 5)
+print("The sum is", x)
+</pre>
+</div>
+<br>
+<div class="acscode">
+<div class="titlebox">Output</div><p></p>
+<pre>
+Before Execution.
+Inside wrapped function.
+After Execution.
+The sum is 30
+</pre>
+</div>
+
+
+<hr class="m-1 mt-4">
+
+
+Previous Page
+<hr class="m-1">
+
+
+<!-- 2nd column end -->
+
+            </div>
+
+        </div>
+        <div class="col-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-0 pull-right">
+        <!-- 3rd column start  -->
+            <ul class="list-group-horizontal">
+            
+            <li class="list-group-item-info " style="padding-block-end:.7em;">
+                <a class="nav-link" ancestor="" alt="Python Tutoral" href="/python3.5/tutoral.html">
+                    Python Tutoral
+                </a>
+                
+                <div style="padding-inline-start: 2.1em;">
+                <p>&nbsp;</p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Scope of Variables" href="/python3.5/Python---Scope-of-Variables.html">
+                    Python - Scope of Variables
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Classes and Objects" href="/python3.5/Python---Classes-and-Objects.html">
+                    Python - Classes and Objects
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       class="text-muted"
+                       alt="Python - Decorators" href="/python3.5/Python---Decorators.html">
+                    Python - Decorators
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Operators" href="/python3.5/Python---Operators.html">
+                    Python - Operators
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Lambda Function" href="/python3.5/Python---Lambda-Function.html">
+                    Python - Lambda Function
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - String Methods" href="/python3.5/Python---String-Methods.html">
+                    Python - String Methods
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Tutorial" href="/python3.5/Python---Tutorial.html">
+                    Python - Tutorial
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Inheritance" href="/python3.5/Python---Inheritance.html">
+                    Python - Inheritance
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Dictionary" href="/python3.5/Python---Dictionary.html">
+                    Python - Dictionary
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - PIP" href="/python3.5/Python---PIP.html">
+                    Python - PIP
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Try Except" href="/python3.5/Python---Try-Except.html">
+                    Python - Try Except
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Type Casting" href="/python3.5/Python---Type-Casting.html">
+                    Python - Type Casting
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Strings" href="/python3.5/Python---Strings.html">
+                    Python - Strings
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Introduction" href="/python3.5/Python---Introduction.html">
+                    Python - Introduction
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Tuples" href="/python3.5/Python---Tuples.html">
+                    Python - Tuples
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Continue Statement" href="/python3.5/Python---Continue-Statement.html">
+                    Python - Continue Statement
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - If-Else Statements" href="/python3.5/Python---If-Else-Statements.html">
+                    Python - If-Else Statements
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Lists" href="/python3.5/Python---Lists.html">
+                    Python - Lists
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Numbers" href="/python3.5/Python---Numbers.html">
+                    Python - Numbers
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Arrays" href="/python3.5/Python---Arrays.html">
+                    Python - Arrays
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Syntax" href="/python3.5/Python---Syntax.html">
+                    Python - Syntax
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - File Handling" href="/python3.5/Python---File-Handling.html">
+                    Python - File Handling
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - While Loop" href="/python3.5/Python---While-Loop.html">
+                    Python - While Loop
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Booleans" href="/python3.5/Python---Booleans.html">
+                    Python - Booleans
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Sets" href="/python3.5/Python---Sets.html">
+                    Python - Sets
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - RegEx" href="/python3.5/Python---RegEx.html">
+                    Python - RegEx
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Variables" href="/python3.5/Python---Variables.html">
+                    Python - Variables
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Built-in Functions" href="/python3.5/Python---Built-in-Functions.html">
+                    Python - Built-in Functions
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Math Module" href="/python3.5/Python---Math-Module.html">
+                    Python - Math Module
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Operator Overloading" href="/python3.5/Python---Operator-Overloading.html">
+                    Python - Operator Overloading
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Modules" href="/python3.5/Python---Modules.html">
+                    Python - Modules
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Functions" href="/python3.5/Python---Functions.html">
+                    Python - Functions
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Date &amp; Time" href="/python3.5/Python---Date---Time.html">
+                    Python - Date &amp; Time
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Data Types" href="/python3.5/Python---Data-Types.html">
+                    Python - Data Types
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Comments" href="/python3.5/Python---Comments.html">
+                    Python - Comments
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - For Loop" href="/python3.5/Python---For-Loop.html">
+                    Python - For Loop
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Set Methods" href="/python3.5/Python---Set-Methods.html">
+                    Python - Set Methods
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Q&amp;A" href="/python3.5/Python---Q-A.html">
+                    Python - Q&amp;A
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Tuple Methods" href="/python3.5/Python---Tuple-Methods.html">
+                    Python - Tuple Methods
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Break Statement" href="/python3.5/Python---Break-Statement.html">
+                    Python - Break Statement
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - List Methods" href="/python3.5/Python---List-Methods.html">
+                    Python - List Methods
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python Examples" href="/python3.5/Python-Examples.html">
+                    Python Examples
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Iterators" href="/python3.5/Python---Iterators.html">
+                    Python - Iterators
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - File Handling Methods" href="/python3.5/Python---File-Handling-Methods.html">
+                    Python - File Handling Methods
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - Dictionary Methods" href="/python3.5/Python---Dictionary-Methods.html">
+                    Python - Dictionary Methods
+                    </a>
+                </p>
+                
+                <p style="margin-block-end:0em;padding-block-end: 1em;">
+                    <a ancestor=""
+                       
+                       alt="Python - JSON" href="/python3.5/Python---JSON.html">
+                    Python - JSON
+                    </a>
+                </p>
+                
+                </div>
+                
+
+            </li>
+            
+            </ul>
+        <!-- 3 -->
+         </div>
+
+  </div>
+
+</div>
+
+
+<footer class="container-fluid row">
+   <div class="text-right col-lg-12 col-md-12 col-sm-12" style="
+    line-height: 4.2em;
+    height: fit-content;
+    margin-bottom:2em;">
+           <div class=" right text-secondary">
+               <span>
+               <strong>2014-<script>document.write(new Date().getFullYear())</script>
+                   <a href="https://www.ipython.club">ipython.club</a></strong>
+               </span>
+            </div>
+  </div>
+</footer>
+
+
+<!-- jQuery 2.2.3 -->
+<script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+<!-- Bootstrap 3.3.6 -->
+<script src="/static/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+</body>
+</html>
