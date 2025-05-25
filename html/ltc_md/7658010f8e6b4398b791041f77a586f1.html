@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2854. 滚动平均步数 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">2854. 滚动平均步数 🔒</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#id4">方法一：窗口函数</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">2854. 滚动平均步数 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/7658010f8e6b4398b791041f77a586f1.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/rolling-average-steps" rel="noreferrer" target="_blank">2854. 滚动平均步数 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/2800-2899/2854.Rolling%20Average%20Steps/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：&nbsp;<code><font face="monospace">Steps</font></code></p>
+<pre>
++-------------+------+ 
+| Column Name | Type | 
++-------------+------+ 
+| user_id     | int  | 
+| steps_count | int  |
+| steps_date  | date |
++-------------+------+
+(user_id, steps_date) 是此表的主键。
+该表的每一行包含 user_id、steps_count 和 steps_date。
+</pre>
+<p>编写一个解决方案，计算出每个用户的&nbsp;<code>3-day</code> <strong>滚动平均步数&nbsp;</strong>。</p>
+<p>计算 <code>n-day</code> <strong>滚动平均值 </strong>的计算方式如下：</p>
+<ul>
+	<li>对于每一天，如果有可用数据的情况下，我们会计算以该天为结束的 <code>n</code> 天连续步数的平均值，否则，对于该天来说，<code>n</code> 天滚动平均步数是未定义的。</li>
+</ul>
+<p>输出 <code>user_id</code>&nbsp;、 <code>steps_date</code><em> </em>和滚动平均值。并将滚动平均值四舍五入到&nbsp;<strong>两位小数</strong>。</p>
+<p>返回结果表以<code>user_id</code><em>&nbsp;</em>和 <code>steps_date</code><em>&nbsp;</em><strong>升序</strong><em>&nbsp;</em>排序。</p>
+<p>结果的格式如下示例。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例 1:</strong></p>
+<pre>
+<b>输入：</b>
+Steps table:
++---------+-------------+------------+
+| user_id | steps_count | steps_date |
++---------+-------------+------------+
+| 1       | 687         | 2021-09-02 |
+| 1       | 395         | 2021-09-04 |
+| 1       | 499         | 2021-09-05 |
+| 1       | 712         | 2021-09-06 |
+| 1       | 576         | 2021-09-07 |
+| 2       | 153         | 2021-09-06 |
+| 2       | 171         | 2021-09-07 |
+| 2       | 530         | 2021-09-08 |
+| 3       | 945         | 2021-09-04 |
+| 3       | 120         | 2021-09-07 |
+| 3       | 557         | 2021-09-08 |
+| 3       | 840         | 2021-09-09 |
+| 3       | 627         | 2021-09-10 |
+| 5       | 382         | 2021-09-05 |
+| 6       | 480         | 2021-09-01 |
+| 6       | 191         | 2021-09-02 |
+| 6       | 303         | 2021-09-05 |
++---------+-------------+------------+
+<b>输出：</b>
++---------+------------+-----------------+
+| user_id | steps_date | rolling_average | 
++---------+------------+-----------------+
+| 1       | 2021-09-06 | 535.33          | 
+| 1       | 2021-09-07 | 595.67          | 
+| 2       | 2021-09-08 | 284.67          |
+| 3       | 2021-09-09 | 505.67          |
+| 3       | 2021-09-10 | 674.67          |    
++---------+------------+-----------------+
+<b>解释：</b>
+- 对于 ID 为 1 的用户，截止到 2021-09-06 的三天连续的步数可用。因此，该日期的滚动平均值计算为 (395 + 499 + 712) / 3 = 535.33。
+- 对于 ID 为 1 的用户，截止到 2021-09-07 的三天连续的步数可用。因此，该日期的滚动平均值计算为 (499 + 712 + 576) / 3 = 595.67。
+- 对于 ID 为 2 的用户，截止到 2021-09-08 的三天连续的步数可用。因此，该日期的滚动平均值计算为 (153 + 171 + 530) / 3 = 284.67。
+- 对于 ID 为 3 的用户，截止到 2021-09-09 的三天连续的步数可用。因此，该日期的滚动平均值计算为 (120 + 557 + 840) / 3 = 505.67。
+- 对于 ID 为 3 的用户，截止到 2021-09-10 的三天连续的步数可用。因此，该日期的滚动平均值计算为 (557 + 840 + 627) / 3 = 674.67。
+- 对于 ID 为 4 和 5 的用户，由于连续三天的数据不足，无法计算滚动平均值。结果表按 user_id 和 steps_date 升序排序。</pre>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id4">
+<h3>方法一：窗口函数<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>我们用窗口函数 <code class="docutils literal notranslate"><span class="pre">LAG()</span> <span class="pre">OVER()</span></code> 来计算每个用户当前日期与上上个日期之间的天数差，如果为 $2$，说明这两个日期之间有连续 $3$ 天的数据，我们可以利用窗口函数 <code class="docutils literal notranslate"><span class="pre">AVG()</span> <span class="pre">OVER()</span></code> 来计算这 $3$ 个数据的平均值。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">steps_date</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ROUND</span><span class="p">(</span>
+<span class="w">                </span><span class="k">AVG</span><span class="p">(</span><span class="n">steps_count</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">                    </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_id</span>
+<span class="w">                    </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">steps_date</span>
+<span class="w">                    </span><span class="k">ROWS</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">PRECEDING</span>
+<span class="w">                </span><span class="p">),</span>
+<span class="w">                </span><span class="mi">2</span>
+<span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">rolling_average</span><span class="p">,</span>
+<span class="w">            </span><span class="n">DATEDIFF</span><span class="p">(</span>
+<span class="w">                </span><span class="n">steps_date</span><span class="p">,</span>
+<span class="w">                </span><span class="n">LAG</span><span class="p">(</span><span class="n">steps_date</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">                    </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_id</span>
+<span class="w">                    </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">steps_date</span>
+<span class="w">                </span><span class="p">)</span>
+<span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">st</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Steps</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">    </span><span class="n">steps_date</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rolling_average</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">T</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3204. 按位用户权限分析 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3204. 按位用户权限分析 🔒</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#id4">方法一：位运算</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3204. 按位用户权限分析 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/89bd168c0c0f43ae8fb526d70824fb71.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/bitwise-user-permissions-analysis" rel="noreferrer" target="_blank">3204. 按位用户权限分析 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3200-3299/3204.Bitwise%20User%20Permissions%20Analysis/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：<code>user_permissions</code></p>
+<pre>
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| user_id     | int     |
+| permissions | int     |
++-------------+---------+
+user_id 是主键。
+这张表的每一行包含用户 ID 和他们的权限，编码为一个整数。
+</pre>
+<p><code>permissions</code>&nbsp;整数中的每一个二进制位代表一个用户拥有的一个不同的访问级别或功能。</p>
+<p>编写一个解决方案来计算以下内容：</p>
+<ul>
+	<li>common_perms：授予 <strong>所有用户</strong> 的访问级别。在&nbsp;<code>permissions</code>&nbsp;列上使用 <strong>按位与&nbsp;</strong>操作来计算。</li>
+	<li>any_perms：授予 <strong>任一用户</strong> 的访问级别。在&nbsp;<code>permissions</code>&nbsp;列上使用 <strong>按位或 </strong>操作来计算。</li>
+</ul>
+<p>以&nbsp;<strong>任意&nbsp;</strong>顺序返回结果表。</p>
+<p>结果格式如下所示。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例：</strong></p>
+<div class="example-block">
+<p><strong>输入：</strong></p>
+<p>user_permissions 表：</p>
+<pre class="example-io">
++---------+-------------+
+| user_id | permissions |
++---------+-------------+
+| 1       | 5           |
+| 2       | 12          |
+| 3       | 7           |
+| 4       | 3           |
++---------+-------------+
+ </pre>
+<p><strong>输出：</strong></p>
+<pre class="example-io">
++-------------+--------------+
+| common_perms | any_perms   |
++--------------+-------------+
+| 0            | 15          |
++--------------+-------------+
+    </pre>
+<p><strong>解释：</strong></p>
+<ul>
+	<li><strong>common_perms:</strong> 代表所有权限的按位与结果：
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;ul&gt;
+	&lt;li&gt;对于用户 1 (5): 5 (二进制 0101)&lt;/li&gt;
+	&lt;li&gt;对于用户 2 (12): 12 (二进制 1100)&lt;/li&gt;
+	&lt;li&gt;对于用户 3 (7): 7 (二进制 0111)&lt;/li&gt;
+	&lt;li&gt;对于用户 4 (3): 3 (二进制 0011)&lt;/li&gt;
+	&lt;li&gt;按位与：5 &amp;amp; 12 &amp;amp; 7 &amp;amp; 3 = 0 (二进制 0000)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;any_perms:&lt;/strong&gt; 代表所有权限的按位或结果：
+&lt;ul&gt;
+	&lt;li&gt;按位或：5 | 12 | 7 | 3 = 15 (二进制 1111)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+</pre></div>
+</div>
+</ul>
+</div>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id4">
+<h3>方法一：位运算<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>我们可以使用 <code class="docutils literal notranslate"><span class="pre">BIT_AND</span></code> 和 <code class="docutils literal notranslate"><span class="pre">BIT_OR</span></code> 函数来计算 <code class="docutils literal notranslate"><span class="pre">common_perms</span></code> 和 <code class="docutils literal notranslate"><span class="pre">any_perms</span></code>。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">BIT_AND</span><span class="p">(</span><span class="n">permissions</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">common_perms</span><span class="p">,</span>
+<span class="w">    </span><span class="n">BIT_OR</span><span class="p">(</span><span class="n">permissions</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">any_perms</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_permissions</span><span class="p">;</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

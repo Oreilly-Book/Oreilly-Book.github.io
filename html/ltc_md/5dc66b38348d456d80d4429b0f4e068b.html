@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2756. Query Batching 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">2756. Query Batching 🔒</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#solution-1">Solution 1</a><ul>
+<li><a class="reference internal" href="#typescript">TypeScript</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">2756. Query Batching 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/5dc66b38348d456d80d4429b0f4e068b.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="query-batching">
+<h1><a class="reference external" href="https://leetcode.com/problems/query-batching" rel="noreferrer" target="_blank">2756. Query Batching 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#query-batching" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/2700-2799/2756.Query%20Batching/README.md"><span class="xref myst">中文文档</span></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>Batching multiple small queries into a single large query can be a useful optimization. Write a class&nbsp;<code>QueryBatcher</code>&nbsp;that implements this functionality.</p>
+<p>The constructor should accept two parameters:</p>
+<ul>
+	<li>An asynchronous function&nbsp;<code>queryMultiple</code>&nbsp;which accepts an array of&nbsp;string keys <code>input</code>. It will resolve with an array of values that is the same length as the input array. Each index corresponds to the value associated with&nbsp;<code>input[i]</code>.&nbsp;You can assume the promise will never reject.</li>
+	<li>A throttle time in milliseconds&nbsp;<code>t</code>.</li>
+</ul>
+<p>The class has a single method.</p>
+<ul>
+	<li><code>async getValue(key)</code>. Accepts a single string key and resolves with a single string value. The keys passed to this function should eventually get passed to the&nbsp;<code>queryMultiple</code>&nbsp;function.&nbsp;<code>queryMultiple</code>&nbsp;should never be called consecutively within&nbsp;<code>t</code>&nbsp;milliseconds. The first time&nbsp;<code>getValue</code>&nbsp;is called,&nbsp;<code>queryMultiple</code>&nbsp;should immediately be called with that single key. If after&nbsp;<code>t</code>&nbsp;milliseconds,&nbsp;<code>getValue</code>&nbsp;had been called again, all the passed keys should be passed to&nbsp;<code>queryMultiple</code>&nbsp;and ultimately returned. You can assume every key passed to this method is unique.</li>
+</ul>
+<p>The following diagram illustrates how the throttling algorithm works. Each rectangle represents 100ms. The throttle time is 400ms.</p>
+<p><img alt="Throttle info" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2700-2799/2756.Query%20Batching/images/throttle.png" style="width: 622px; height: 200px;" /></p>
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+<pre>
+<strong>Input:</strong> 
+queryMultiple = async function(keys) { 
+&nbsp; return keys.map(key =&gt; key + &#39;!&#39;);
+}
+t = 100 
+calls = [
+&nbsp;{&quot;key&quot;: &quot;a&quot;, &quot;time&quot;: 10}, 
+&nbsp;{&quot;key&quot;: &quot;b&quot;, &quot;time&quot;: 20}, 
+&nbsp;{&quot;key&quot;: &quot;c&quot;, &quot;time&quot;: 30}
+]
+<strong>Output:</strong> [
+&nbsp;{&quot;resolved&quot;: &quot;a!&quot;, &quot;time&quot;: 10},
+&nbsp;{&quot;resolved&quot;: &quot;b!&quot;, &quot;time&quot;: 110},
+&nbsp;{&quot;resolved&quot;: &quot;c!&quot;, &quot;time&quot;: 110}
+]
+<strong>Explanation:</strong>
+const batcher = new QueryBatcher(queryMultiple, 100);
+setTimeout(() =&gt; batcher.getValue(&#39;a&#39;), 10); // &quot;a!&quot; at t=10ms
+setTimeout(() =&gt; batcher.getValue(&#39;b&#39;), 20); // &quot;b!&quot; at t=110ms
+setTimeout(() =&gt; batcher.getValue(&#39;c&#39;), 30); // &quot;c!&quot; at t=110ms
+
+queryMultiple simply adds an &quot;!&quot; to the key
+At t=10ms, getValue(&#39;a&#39;) is called, queryMultiple([&#39;a&#39;]) is immediately called and the result is immediately returned.
+At t=20ms, getValue(&#39;b&#39;) is called but the query is queued
+At t=30ms, getValue(&#39;c&#39;) is called but the query is queued.
+At t=110ms, queryMultiple([&#39;a&#39;, &#39;b&#39;]) is called and the results are immediately returned.
+</pre>
+<p><strong class="example">Example 2:</strong></p>
+<pre>
+<strong>Input:</strong> 
+queryMultiple = async function(keys) {
+&nbsp; await new Promise(res =&gt; setTimeout(res, 100));
+&nbsp; return keys.map(key =&gt; key + &#39;!&#39;);
+}
+t = 100
+calls = [
+&nbsp;{&quot;key&quot;: &quot;a&quot;, &quot;time&quot;: 10},
+&nbsp;{&quot;key&quot;: &quot;b&quot;, &quot;time&quot;: 20},
+&nbsp;{&quot;key&quot;: &quot;c&quot;, &quot;time&quot;: 30}
+]
+<strong>Output:</strong> [
+&nbsp; {&quot;resolved&quot;: &quot;a!&quot;, &quot;time&quot;: 110},
+&nbsp; {&quot;resolved&quot;: &quot;b!&quot;, &quot;time&quot;: 210},
+&nbsp; {&quot;resolved&quot;: &quot;c!&quot;, &quot;time&quot;: 210}
+]
+<strong>Explanation:</strong>
+This example is the same as example 1 except there is a 100ms delay in queryMultiple. The results are the same except the promises resolve 100ms later.
+</pre>
+<p><strong class="example">Example 3:</strong></p>
+<pre>
+<strong>Input:</strong> 
+queryMultiple = async function(keys) { 
+&nbsp; await new Promise(res =&gt; setTimeout(res, keys.length * 100)); 
+&nbsp; return keys.map(key =&gt; key + &#39;!&#39;);
+}
+t = 100
+calls = [
+&nbsp; {&quot;key&quot;: &quot;a&quot;, &quot;time&quot;: 10}, 
+  {&quot;key&quot;: &quot;b&quot;, &quot;time&quot;: 20}, 
+&nbsp; {&quot;key&quot;: &quot;c&quot;, &quot;time&quot;: 30}, 
+  {&quot;key&quot;: &quot;d&quot;, &quot;time&quot;: 40}, 
+&nbsp; {&quot;key&quot;: &quot;e&quot;, &quot;time&quot;: 250}
+&nbsp; {&quot;key&quot;: &quot;f&quot;, &quot;time&quot;: 300}
+]
+<strong>Output:</strong> [
+&nbsp; {&quot;resolved&quot;:&quot;a!&quot;,&quot;time&quot;:110},
+&nbsp; {&quot;resolved&quot;:&quot;e!&quot;,&quot;time&quot;:350},
+&nbsp; {&quot;resolved&quot;:&quot;b!&quot;,&quot;time&quot;:410},
+&nbsp; {&quot;resolved&quot;:&quot;c!&quot;,&quot;time&quot;:410},
+&nbsp; {&quot;resolved&quot;:&quot;d!&quot;,&quot;time&quot;:410},
+  {&quot;resolved&quot;:&quot;f!&quot;,&quot;time&quot;:450}
+]
+<strong>Explanation:
+</strong>queryMultiple([&#39;a&#39;]) is called at t=10ms, it is resolved at t=110ms
+queryMultiple([&#39;b&#39;, &#39;c&#39;, &#39;d&#39;]) is called at t=110ms, it is resolved at 410ms
+queryMultiple([&#39;e&#39;]) is called at t=250ms, it is resolved at 350ms
+queryMultiple([&#39;f&#39;]) is called at t=350ms, it is resolved at 450ms
+</pre>
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+	<li><code>0 &lt;= t &lt;= 1000</code></li>
+	<li><code>0 &lt;= calls.length &lt;= 10</code></li>
+	<li><code>1 &lt;= key.length&nbsp;&lt;= 100</code></li>
+	<li>All keys are unique</li>
+</ul>
+<!-- description:end -->
+</section>
+<section id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="solution-1">
+<h3>Solution 1<a class="headerlink" href="#solution-1" title="Link to this heading"></a></h3>
+<!-- tabs:start -->
+<section id="typescript">
+<h4>TypeScript<a class="headerlink" href="#typescript" title="Link to this heading"></a></h4>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

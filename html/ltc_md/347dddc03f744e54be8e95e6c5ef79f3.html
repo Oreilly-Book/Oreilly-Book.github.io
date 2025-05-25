@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3089. 查找突发行为 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3089. 查找突发行为 🔒</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#id4">方法一：自连接 + 分组统计</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#python3">Python3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3089. 查找突发行为 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/347dddc03f744e54be8e95e6c5ef79f3.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/find-bursty-behavior" rel="noreferrer" target="_blank">3089. 查找突发行为 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3000-3099/3089.Find%20Bursty%20Behavior/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：<code>Posts</code></p>
+<pre>
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| post_id     | int     |
+| user_id     | int     |
+| post_date   | date    |
++-------------+---------+
+post_id 是这张表的主键（有不同值的列）。
+这张表的每一行包含 post_id，user_id 和 post_date。
+</pre>
+<p>编写一个解决方案来找到在 <code>2024</code> 年 2 月期间在发帖行为中表现出 <strong>突发行为</strong> 的用户。<strong>突发行为</strong>&nbsp;指用户在&nbsp;<code>2024</code> 年 2 月 <strong>存在一个</strong> <strong>连续 7 天</strong> 的时段中发帖频率是其 <strong>平均</strong> 每周发帖频率的 <strong>至少两倍</strong>。</p>
+<p><strong>注意：</strong>&nbsp;在你的统计中只包含 2 月 <code>1</code> 日 到 2 月 <code>28</code> 日，也就是说你应该把 2 月记为正好 <code>4</code> 周。</p>
+<p>返回结果表，以<em>&nbsp;</em><code>user_id</code><em> </em><strong>升序</strong><em>&nbsp;</em>排序。</p>
+<p>结果格式如下所示。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例：</strong></p>
+<div class="example-block">
+<p><strong>输入：</strong></p>
+<p>Posts 表：</p>
+<pre class="example-io">
++---------+---------+------------+
+| post_id | user_id | post_date  |
++---------+---------+------------+
+| 1       | 1       | 2024-02-27 |
+| 2       | 5       | 2024-02-06 |
+| 3       | 3       | 2024-02-25 |
+| 4       | 3       | 2024-02-14 |
+| 5       | 3       | 2024-02-06 |
+| 6       | 2       | 2024-02-25 |
++---------+---------+------------+
+</pre>
+<p><strong>输出：</strong></p>
+<pre class="example-io">
++---------+----------------+------------------+
+| user_id | max_7day_posts | avg_weekly_posts |
++---------+----------------+------------------+
+| 1       | 1              | 0.2500           |
+| 2       | 1              | 0.2500           |
+| 5       | 1              | 0.2500           |
++---------+----------------+------------------+
+</pre>
+<p><strong>解释：</strong></p>
+<ul>
+	<li><strong>用户 1：</strong>2 月份只发布了 1 个帖子，平均每周发布 0.25 个帖子，任何 7 天期间最多发布 1 个帖子。</li>
+	<li><strong>用户 2：</strong>也只发了 1 个帖子，与用户 1 相同的平均和最大 7 天发帖频率。</li>
+	<li><strong>用户 5：</strong>与用户 1 和用户 2 一样，用户 5 在整个 2 月份只发布了 1 篇文章，得到相同的平均和最大 7 天发帖频率。</li>
+	<li><strong>用户 3：</strong>虽然用户 3 发布的帖子比其他用户多（3 篇），但他在连续 7 天期间中没有达到每周平均发帖频率的两倍，因此没有在输出中列出。</li>
+</ul>
+<p><b>注意：</b>&nbsp;输出表以 user_id 升序排序。</p>
+</div>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id4">
+<h3>方法一：自连接 + 分组统计<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>我们可以使用自连接，将表 <code class="docutils literal notranslate"><span class="pre">Posts</span></code> 与自身连接，连接条件是 <code class="docutils literal notranslate"><span class="pre">p1.user_id</span> <span class="pre">=</span> <span class="pre">p2.user_id</span></code> 且 <code class="docutils literal notranslate"><span class="pre">p2.post_date</span></code> 在 <code class="docutils literal notranslate"><span class="pre">p1.post_date</span></code> 和 <code class="docutils literal notranslate"><span class="pre">p1.post_date</span></code> 后 <code class="docutils literal notranslate"><span class="pre">6</span></code> 天之间，然后我们将连接结果按照 <code class="docutils literal notranslate"><span class="pre">p1.user_id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">p1.post_id</span></code> 分组，即可统计出每个用户在每天的 7 天内的发帖数量，我们将这个结果保存在表 <code class="docutils literal notranslate"><span class="pre">P</span></code> 中。</p>
+<p>接着我们统计出每个用户在 2024 年 2 月份的每周平均发帖数量，保存在表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 中。注意，我们需要查找 <code class="docutils literal notranslate"><span class="pre">post_date</span></code> 在 <code class="docutils literal notranslate"><span class="pre">2024-02-01</span></code> 和 <code class="docutils literal notranslate"><span class="pre">2024-02-28</span></code> 之间的记录，将记录按照 <code class="docutils literal notranslate"><span class="pre">user_id</span></code> 分组，然后统计每个用户的发帖数量，最后除以 <code class="docutils literal notranslate"><span class="pre">4</span></code> 即可得到每周平均发帖数量，我们将这个结果保存在表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 中。</p>
+<p>最后，我们将表 <code class="docutils literal notranslate"><span class="pre">P</span></code> 和表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 连接，连接条件是 <code class="docutils literal notranslate"><span class="pre">P.user_id</span> <span class="pre">=</span> <span class="pre">T.user_id</span></code>，然后按照 <code class="docutils literal notranslate"><span class="pre">user_id</span></code> 分组，统计出每个用户在 7 天内的最大发帖数量，最后筛选出满足条件 <code class="docutils literal notranslate"><span class="pre">max_7day_posts</span> <span class="pre">&gt;=</span> <span class="pre">avg_weekly_posts</span> <span class="pre">*</span> <span class="pre">2</span></code> 的记录，即可得到结果。注意，我们需要按照 <code class="docutils literal notranslate"><span class="pre">user_id</span></code> 升序排序。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span>
+<span class="w">    </span><span class="n">P</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">cnt</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">Posts</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p1</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Posts</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p2</span>
+<span class="w">                </span><span class="k">ON</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">user_id</span>
+<span class="w">                </span><span class="k">AND</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">post_date</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">post_date</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">DATE_ADD</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">post_date</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="k">DAY</span><span class="p">)</span>
+<span class="w">        </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">post_id</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_weekly_posts</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Posts</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">post_date</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="s1">&#39;2024-02-01&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="s1">&#39;2024-02-28&#39;</span>
+<span class="w">        </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">max_7day_posts</span><span class="p">,</span><span class="w"> </span><span class="n">avg_weekly_posts</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">P</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="n">max_7day_posts</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">avg_weekly_posts</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="python3">
+<h4>Python3<a class="headerlink" href="#python3" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_bursty_behavior</span><span class="p">(</span><span class="n">posts</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="c1"># 子查询 P</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">posts</span><span class="p">,</span> <span class="n">posts</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;_1&quot;</span><span class="p">,</span> <span class="s2">&quot;_2&quot;</span><span class="p">)</span>
+    <span class="p">)</span>  <span class="c1"># 合并帖子表自身，根据用户ID</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span>
+        <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;post_date_2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span>
+            <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;post_date_1&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;post_date_1&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">]</span>  <span class="c1"># 筛选出相邻 7 天内的帖子</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">p1</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;post_id_1&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;cnt&quot;</span><span class="p">)</span>
+    <span class="p">)</span>  <span class="c1"># 统计每个用户在相邻 7 天内的帖子数</span>
+
+    <span class="c1"># 子查询 T</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">posts</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">posts</span><span class="p">[</span><span class="s2">&quot;post_date&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="s2">&quot;2024-02-01&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">posts</span><span class="p">[</span><span class="s2">&quot;post_date&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="s2">&quot;2024-02-28&quot;</span><span class="p">)</span>
+    <span class="p">]</span>  <span class="c1"># 筛选出 2024 年 2 月份的帖子</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;avg_weekly_posts&quot;</span><span class="p">)</span>
+    <span class="p">)</span>  <span class="c1"># 计算每个用户平均每周的帖子数</span>
+
+    <span class="c1"># 连接 P 和 T</span>
+    <span class="n">merged_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>  <span class="c1"># 内连接 P 和 T</span>
+
+    <span class="c1"># 过滤</span>
+    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">merged_df</span><span class="p">[</span>
+        <span class="n">merged_df</span><span class="p">[</span><span class="s2">&quot;cnt&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">merged_df</span><span class="p">[</span><span class="s2">&quot;avg_weekly_posts&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="p">]</span>  <span class="c1"># 过滤出满足条件的行</span>
+
+    <span class="c1"># 聚合</span>
+    <span class="n">result_df</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">filtered_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s2">&quot;cnt&quot;</span><span class="p">:</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;avg_weekly_posts&quot;</span><span class="p">:</span> <span class="s2">&quot;first&quot;</span><span class="p">})</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="p">)</span>  <span class="c1"># 对满足条件的行按用户ID聚合</span>
+    <span class="n">result_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;max_7day_posts&quot;</span><span class="p">,</span> <span class="s2">&quot;avg_weekly_posts&quot;</span><span class="p">]</span>  <span class="c1"># 重命名列名</span>
+
+    <span class="c1"># 排序</span>
+    <span class="n">result_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 按用户ID排序</span>
+
+    <span class="k">return</span> <span class="n">result_df</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

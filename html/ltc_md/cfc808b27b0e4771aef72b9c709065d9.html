@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2689. 从 Rope 树中提取第 K 个字符 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">2689. 从 Rope 树中提取第 K 个字符 🔒</a><ul>
+<li><a class="reference internal" href="#id1">题目描述</a></li>
+<li><a class="reference internal" href="#id2">解法</a><ul>
+<li><a class="reference internal" href="#dfs">方法一：DFS</a><ul>
+<li><a class="reference internal" href="#python3">Python3</a></li>
+<li><a class="reference internal" href="#java">Java</a></li>
+<li><a class="reference internal" href="#c">C++</a></li>
+<li><a class="reference internal" href="#go">Go</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">2689. 从 Rope 树中提取第 K 个字符 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/cfc808b27b0e4771aef72b9c709065d9.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="rope-k">
+<h1><a class="reference external" href="https://leetcode.cn/problems/extract-kth-character-from-the-rope-tree" rel="noreferrer" target="_blank">2689. 从 Rope 树中提取第 K 个字符 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#rope-k" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/2600-2699/2689.Extract%20Kth%20Character%20From%20The%20Rope%20Tree/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id1">
+<h2>题目描述<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>给定一个二叉树的根节点 <code>root</code> 和整数 <code>k</code>。除了左右孩子之外，该树的每个节点还有另外两个属性：一个仅包含小写英文字母（可能为空）的 <strong>字符串</strong> <code>node.val</code> 和一个非负整数 <code>node.len</code>。这棵树中有两种类型的节点：</p>
+<ul>
+	<li><strong>叶子节点</strong>：这些节点没有子节点，<code>node.len = 0</code>，<code>node.val</code> 是一个 <strong>非空</strong> 字符串。</li>
+	<li><strong>内部节点</strong>：这些节点至少有一个子节点（最多两个子节点），<code>node.len &gt; 0</code>，<code>node.val</code> 是一个 <strong>空</strong> 字符串。</li>
+</ul>
+<p>上述描述的树被称为 Rope 二叉树。现在我们用以下递归方式定义 <code>S[node]</code>：</p>
+<ul>
+	<li>如果 <code>node</code> 是一个叶子节点，则 <code>S[node] = node.val</code>，</li>
+	<li>否则，如果 <code>node</code> 是一个内部节点，则 <code>S[node] = concat(S[node.left], S[node.right])</code>，且 <code>S[node].length = node.len</code>。</li>
+</ul>
+<p>返回字符串 <code>S[root]</code> 的第 <code>k</code> 个字符。</p>
+<p><strong>注意</strong>：如果 <code>s</code> 和 <code>p</code> 是两个字符串，则 <code>concat(s, p)</code> 是将字符串 <code>p</code> 连接到 <code>s</code> 后面的字符串。例如，<code>concat("ab", "zz") = "abzz"</code>。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例 1：</strong></p>
+<pre>
+<b>输入：</b>root = [10,4,"abcpoe","g","rta"], k = 6
+<b>输出：</b>"b"
+<b>解释：</b>在下面的图片中，我们在内部节点上放置一个表示 <code>node.len</code> 的整数，在叶子节点上放置一个表示 <code>node.val</code> 的字符串。 你可以看到，<code>S[root] = concat(concat("g", "rta"), "abcpoe") = "grtaabcpoe"</code>。因此，<code>S[root][5]</code>，表示它的第6个字符，等于 "b"。
+</pre>
+<p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2600-2699/2689.Extract%20Kth%20Character%20From%20The%20Rope%20Tree/images/example1.png" style="width: 300px; height: 213px; margin-left: 280px; margin-right: 280px;" /></p>
+<p><strong class="example">示例 2：</strong></p>
+<pre>
+<b>输入：</b>root = [12,6,6,"abc","efg","hij","klm"], k = 3
+<b>输出：</b>"c"
+<b>解释：</b>在下面的图片中，我们在内部节点上放置一个表示 <code>node.len</code> 的整数，在叶子节点上放置一个表示 <code>node.val</code> 的字符串。 你可以看到，<code>S[root] = concat(concat("abc", "efg"), concat("hij", "klm")) = "abcefghijklm"</code>。因此，<code>S[root][2]</code>，表示它的第3个字符，等于 "c"。
+</pre>
+<p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2600-2699/2689.Extract%20Kth%20Character%20From%20The%20Rope%20Tree/images/example2.png" style="width: 400px; height: 232px; margin-left: 255px; margin-right: 255px;" /></p>
+<p><strong class="example">示例 3：</strong></p>
+<pre>
+<b>输入：</b>root = ["ropetree"], k = 8
+<b>输出：</b>"e"
+<b>解释：</b>在下面的图片中，我们在内部节点上放置一个表示 <code>node.len</code> 的整数，在叶子节点上放置一个表示 <code>node.val</code> 的字符串。 你可以看到，<code>S[root] = "ropetree"</code>。因此，<code>S[root][7]</code>，表示它的第8个字符，等于 "e"。
+</pre>
+<p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2600-2699/2689.Extract%20Kth%20Character%20From%20The%20Rope%20Tree/images/example3.png" style="width: 80px; height: 78px; margin-left: 400px; margin-right: 400px;" /></p>
+<p>&nbsp;</p>
+<p><strong>提示：</strong></p>
+<ul>
+	<li>这棵树的节点数量在区间&nbsp;<code>[1, 10<sup>3</sup>]</code></li>
+	<li><code>node.val</code> 仅包含小写英文字母</li>
+	<li><code>0 &lt;= node.val.length &lt;= 50</code></li>
+	<li><code>0 &lt;= node.len &lt;= 10<sup>4</sup></code></li>
+	<li>对于叶子节点， <code>node.len = 0</code> 且&nbsp;<code>node.val</code> 是非空的</li>
+	<li>对于内部节点， <code>node.len &gt; 0 </code>&nbsp;且&nbsp;<code>node.val</code> 为空</li>
+	<li><code>1 &lt;= k &lt;= S[root].length</code></li>
+</ul>
+<!-- description:end -->
+</section>
+<section id="id2">
+<h2>解法<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="dfs">
+<h3>方法一：DFS<a class="headerlink" href="#dfs" title="Link to this heading"></a></h3>
+<p>我们可以使用深度优先搜索的方法，定义一个函数 $dfs(root)$，表示从根节点开始搜索，返回以 $root$ 为根节点的子树的字符串。那么答案就是 $dfs(root)[k-1]$。</p>
+<p>函数 $dfs(root)$ 的执行逻辑如下：</p>
+<ul class="simple">
+<li><p>如果 $root$ 为空，返回空字符串；</p></li>
+<li><p>如果 $root$ 是叶子节点，返回 $root.val$；</p></li>
+<li><p>否则，返回 $dfs(root.left) + dfs(root.right)$。</p></li>
+</ul>
+<p>时间复杂度 $O(n^2)$，空间复杂度 $O(n)$。其中 $n$ 是树中节点的个数。</p>
+<!-- tabs:start -->
+<section id="python3">
+<h4>Python3<a class="headerlink" href="#python3" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definition for a rope tree node.</span>
+<span class="c1"># class RopeTreeNode(object):</span>
+<span class="c1">#     def __init__(self, len=0, val=&quot;&quot;, left=None, right=None):</span>
+<span class="c1">#         self.len = len</span>
+<span class="c1">#         self.val = val</span>
+<span class="c1">#         self.left = left</span>
+<span class="c1">#         self.right = right</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getKthCharacter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">object</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span>
+            <span class="k">return</span> <span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span> <span class="o">+</span> <span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="p">)[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="java">
+<h4>Java<a class="headerlink" href="#java" title="Link to this heading"></a></h4>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Definition for a rope tree node.</span>
+<span class="cm"> * class RopeTreeNode {</span>
+<span class="cm"> *     int len;</span>
+<span class="cm"> *     String val;</span>
+<span class="cm"> *     RopeTreeNode left;</span>
+<span class="cm"> *     RopeTreeNode right;</span>
+<span class="cm"> *     RopeTreeNode() {}</span>
+<span class="cm"> *     RopeTreeNode(String val) {</span>
+<span class="cm"> *         this.len = 0;</span>
+<span class="cm"> *         this.val = val;</span>
+<span class="cm"> *     }</span>
+<span class="cm"> *     RopeTreeNode(int len) {</span>
+<span class="cm"> *         this.len = len;</span>
+<span class="cm"> *         this.val = &quot;&quot;;</span>
+<span class="cm"> *     }</span>
+<span class="cm"> *     RopeTreeNode(int len, TreeNode left, TreeNode right) {</span>
+<span class="cm"> *         this.len = len;</span>
+<span class="cm"> *         this.val = &quot;&quot;;</span>
+<span class="cm"> *         this.left = left;</span>
+<span class="cm"> *         this.right = right;</span>
+<span class="cm"> *     }</span>
+<span class="cm"> * }</span>
+<span class="cm"> */</span>
+<span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="nf">getKthCharacter</span><span class="p">(</span><span class="n">RopeTreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="p">).</span><span class="na">charAt</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">RopeTreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">val</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">val</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="p">);</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="c">
+<h4>C++<a class="headerlink" href="#c" title="Link to this heading"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Definition for a rope tree node.</span>
+<span class="cm"> * struct RopeTreeNode {</span>
+<span class="cm"> *     int len;</span>
+<span class="cm"> *     string val;</span>
+<span class="cm"> *     RopeTreeNode *left;</span>
+<span class="cm"> *     RopeTreeNode *right;</span>
+<span class="cm"> *     RopeTreeNode() : len(0), val(&quot;&quot;), left(nullptr), right(nullptr) {}</span>
+<span class="cm"> *     RopeTreeNode(string s) : len(0), val(std::move(s)), left(nullptr), right(nullptr) {}</span>
+<span class="cm"> *     RopeTreeNode(int x) : len(x), val(&quot;&quot;), left(nullptr), right(nullptr) {}</span>
+<span class="cm"> *     RopeTreeNode(int x, RopeTreeNode *left, RopeTreeNode *right) : len(x), val(&quot;&quot;), left(left), right(right) {}</span>
+<span class="cm"> * };</span>
+<span class="cm"> */</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">getKthCharacter</span><span class="p">(</span><span class="n">RopeTreeNode</span><span class="o">*</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">function</span><span class="o">&lt;</span><span class="n">string</span><span class="p">(</span><span class="n">RopeTreeNode</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">RopeTreeNode</span><span class="o">*</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">len</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">string</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+<span class="w">            </span><span class="n">string</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">right</span><span class="p">;</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">root</span><span class="p">)[</span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="go">
+<h4>Go<a class="headerlink" href="#go" title="Link to this heading"></a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Definition for a rope tree node.</span>
+<span class="cm"> * type RopeTreeNode struct {</span>
+<span class="cm"> * 	   len   int</span>
+<span class="cm"> * 	   val   string</span>
+<span class="cm"> * 	   left  *RopeTreeNode</span>
+<span class="cm"> * 	   right *RopeTreeNode</span>
+<span class="cm"> * }</span>
+<span class="cm"> */</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">getKthCharacter</span><span class="p">(</span><span class="nx">root</span><span class="w"> </span><span class="o">*</span><span class="nx">RopeTreeNode</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="kd">var</span><span class="w"> </span><span class="nx">dfs</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">root</span><span class="w"> </span><span class="o">*</span><span class="nx">RopeTreeNode</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">	</span><span class="nx">dfs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">root</span><span class="w"> </span><span class="o">*</span><span class="nx">RopeTreeNode</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="k">if</span><span class="w"> </span><span class="nx">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">		</span><span class="p">}</span>
+<span class="w">		</span><span class="k">if</span><span class="w"> </span><span class="nx">root</span><span class="p">.</span><span class="nx">len</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="k">return</span><span class="w"> </span><span class="nx">root</span><span class="p">.</span><span class="nx">val</span>
+<span class="w">		</span><span class="p">}</span>
+<span class="w">		</span><span class="nx">left</span><span class="p">,</span><span class="w"> </span><span class="nx">right</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">dfs</span><span class="p">(</span><span class="nx">root</span><span class="p">.</span><span class="nx">left</span><span class="p">),</span><span class="w"> </span><span class="nx">dfs</span><span class="p">(</span><span class="nx">root</span><span class="p">.</span><span class="nx">right</span><span class="p">)</span>
+<span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="nx">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">right</span>
+<span class="w">	</span><span class="p">}</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">dfs</span><span class="p">(</span><span class="nx">root</span><span class="p">)[</span><span class="nx">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3278. 寻找数据科学家职位的候选人 II 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3278. 寻找数据科学家职位的候选人 II 🔒</a><ul>
+<li><a class="reference internal" href="#id1">题目描述</a></li>
+<li><a class="reference internal" href="#id2">解法</a><ul>
+<li><a class="reference internal" href="#id3">方法一：等值连接 + 分组统计 + 窗口函数</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3278. 寻找数据科学家职位的候选人 II 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/db18769b8e064cefadeb2e94344528b8.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="ii">
+<h1><a class="reference external" href="https://leetcode.cn/problems/find-candidates-for-data-scientist-position-ii" rel="noreferrer" target="_blank">3278. 寻找数据科学家职位的候选人 II 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#ii" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3200-3299/3278.Find%20Candidates%20for%20Data%20Scientist%20Position%20II/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id1">
+<h2>题目描述<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：<font face="monospace"><code>Candidates</code></font></p>
+<pre>
++--------------+---------+ 
+| Column Name  | Type    | 
++--------------+---------+ 
+| candidate_id | int     | 
+| skill        | varchar |
+| proficiency  | int     |
++--------------+---------+
+是这张表的主键（有不同值的列）。 
+每一行包括 candidate_id 和技能，以及熟练程度（1-5）。
+</pre>
+<p>表：<font face="monospace"><code>Projects</code></font></p>
+<pre>
++--------------+---------+ 
+| Column Name  | Type    | 
++--------------+---------+ 
+| project_id   | int     | 
+| skill        | varchar |
+| importance   | int     |
++--------------+---------+
+(project_id, skill) 是这张表的主键。
+每一行包括 project_id，所需技能，以及项目的重要性（1-5）。
+</pre>
+<p>Leetcode 正在为多个数据科学项目招聘人员。编写一个解决方案来根据以下条件为 <strong>每一个项目</strong> 找到 <strong>最佳候选人</strong>：</p>
+<ol>
+	<li>候选人必须拥有项目所需的 <strong>所有</strong>&nbsp;技能。</li>
+	<li>为每个候选人-项目对计算如下的 <strong>分数</strong>：
+	<ul>
+		<li>从&nbsp;<code>100</code>&nbsp;分<strong>&nbsp;开始。</strong></li>
+		<li>对于每一个技能，当 <b>熟练程度 &gt; 重要性 加</b>&nbsp;<code>10</code>&nbsp;分。</li>
+		<li>对于每一个技能，当&nbsp;<strong>熟练程度 &lt; 重要性 减</strong>&nbsp;<code>5</code>&nbsp;分。</li>
+		<li>如果候选人的技能熟练程度 <strong>等于</strong> 项目的技能重要性，则分数保持不变</li>
+	</ul>
+	</li>
+</ol>
+<p>仅包括每个项目的最佳候选人（最高分）。如果 <strong>相同</strong>，选择有 <strong>更小</strong>&nbsp;<code>candidate_id</code>&nbsp;的候选人。如果一个项目 <strong>没有适合的候选人</strong>，<strong>不要返回 </strong>那个项目。</p>
+<p>返回结果表以&nbsp;<code>project_id</code>&nbsp;升序排序。</p>
+<p>输出格式如下所示。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例：</strong></p>
+<div class="example-block">
+<p><strong>输入：</strong></p>
+<p><code>Candidates</code> 表：</p>
+<pre class="example-io">
++--------------+-----------+-------------+
+| candidate_id | skill     | proficiency |
++--------------+-----------+-------------+
+| 101          | Python    | 5           |
+| 101          | Tableau   | 3           |
+| 101          | PostgreSQL| 4           |
+| 101          | TensorFlow| 2           |
+| 102          | Python    | 4           |
+| 102          | Tableau   | 5           |
+| 102          | PostgreSQL| 4           |
+| 102          | R         | 4           |
+| 103          | Python    | 3           |
+| 103          | Tableau   | 5           |
+| 103          | PostgreSQL| 5           |
+| 103          | Spark     | 4           |
++--------------+-----------+-------------+
+</pre>
+<p><code>Projects</code> 表：</p>
+<pre class="example-io">
++-------------+-----------+------------+
+| project_id  | skill     | importance |
++-------------+-----------+------------+
+| 501         | Python    | 4          |
+| 501         | Tableau   | 3          |
+| 501         | PostgreSQL| 5          |
+| 502         | Python    | 3          |
+| 502         | Tableau   | 4          |
+| 502         | R         | 2          |
++-------------+-----------+------------+
+</pre>
+<p><strong>输出：</strong></p>
+<pre class="example-io">
++-------------+--------------+-------+
+| project_id  | candidate_id | score |
++-------------+--------------+-------+
+| 501         | 101          | 105   |
+| 502         | 102          | 130   |
++-------------+--------------+-------+
+</pre>
+<p><strong>解释：</strong></p>
+<ul>
+	<li>对于项目 501, 候选人 101 有最高的 105 分。所有其他的候选人有相同的分数，但候选人 101 有比他们更小的 candidate_id。</li>
+	<li>对于项目 502，候选人&nbsp;102 有最高的 130&nbsp;分。</li>
+</ul>
+<p>输出表以 project_id 升序排序。</p>
+</div>
+<!-- description:end -->
+</section>
+<section id="id2">
+<h2>解法<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id3">
+<h3>方法一：等值连接 + 分组统计 + 窗口函数<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>我们可以将表 <code class="docutils literal notranslate"><span class="pre">Candidates</span></code> 和表 <code class="docutils literal notranslate"><span class="pre">Projects</span></code> 通过 <code class="docutils literal notranslate"><span class="pre">skill</span></code> 列进行等值连接，统计每个候选人在每个项目中匹配的技能数量、总分数，记录在表 <code class="docutils literal notranslate"><span class="pre">S</span></code> 中。</p>
+<p>然后我们再次统计每个项目所需的技能数量，记录在表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 中。</p>
+<p>接着我们将表 <code class="docutils literal notranslate"><span class="pre">S</span></code> 和表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 通过 <code class="docutils literal notranslate"><span class="pre">project_id</span></code> 列进行等值连接，筛选出匹配的技能数量等于所需技能数量的候选人，记录在表 <code class="docutils literal notranslate"><span class="pre">P</span></code> 中，并计算每个项目的候选人排名，字段为 <code class="docutils literal notranslate"><span class="pre">rk</span></code>。</p>
+<p>最后我们筛选出每个项目的排名为 1 的候选人，即为最佳候选人。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">WITH</span>
+<span class="w">    </span><span class="n">S</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">candidate_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">project_id</span><span class="p">,</span>
+<span class="w">            </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">matched_skills</span><span class="p">,</span>
+<span class="w">            </span><span class="k">SUM</span><span class="p">(</span>
+<span class="w">                </span><span class="k">CASE</span>
+<span class="w">                    </span><span class="k">WHEN</span><span class="w"> </span><span class="n">proficiency</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">importance</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">                    </span><span class="k">WHEN</span><span class="w"> </span><span class="n">proficiency</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">importance</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span>
+<span class="w">                    </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                </span><span class="k">END</span>
+<span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">score</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">Candidates</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Projects</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">skill</span><span class="p">)</span>
+<span class="w">        </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">project_id</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">required_skills</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Projects</span>
+<span class="w">        </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">P</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">project_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">candidate_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">score</span><span class="p">,</span>
+<span class="w">            </span><span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">                </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">project_id</span>
+<span class="w">                </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">candidate_id</span>
+<span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="n">rk</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">S</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">project_id</span><span class="p">)</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">matched_skills</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">required_skills</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">project_id</span><span class="p">,</span><span class="w"> </span><span class="n">candidate_id</span><span class="p">,</span><span class="w"> </span><span class="n">score</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">P</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">rk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

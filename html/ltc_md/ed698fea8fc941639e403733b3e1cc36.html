@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3236. 首席执行官下属层级 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3236. 首席执行官下属层级 🔒</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#cte">方法一：递归 CTE + 连接</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3236. 首席执行官下属层级 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/ed698fea8fc941639e403733b3e1cc36.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/ceo-subordinate-hierarchy" rel="noreferrer" target="_blank">3236. 首席执行官下属层级 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3200-3299/3236.CEO%20Subordinate%20Hierarchy/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：<code>Employees</code></p>
+<pre>
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| employee_id   | int     |
+| employee_name | varchar |
+| manager_id    | int     |
+| salary        | int     |
++---------------+---------+
+employee_id 是这张表的唯一标识符。
+manager_id 是 employee_id 对应员工的经理。首席执行官的 manager_id 为 NULL。
+</pre>
+<p>编写一个解决方案来找到首席执行官的下属（<strong>直接</strong> 和&nbsp;<strong>非直接</strong>），以及他们在 <strong>等级制度中的级别</strong> 以及与首席执行官的 <strong>薪资差异</strong>。结果应该包含下面的列：</p>
+<p>查询结果格式如下所示。</p>
+<ul>
+	<li><code>subordinate_id</code>：下属的 employee_id。</li>
+	<li><code>subordinate_name</code>：下属的名字。</li>
+	<li><code>hierarchy_level</code>：下属在等级制度中的级别（<code>1</code>&nbsp;表示直接下属，<code>2</code>&nbsp;表示 <b>他们的直接下属</b>，<strong>以此类推</strong>。）</li>
+	<li><code>salary_difference</code>：下属与首席执行官的薪资差异。</li>
+</ul>
+<p>返回结果表以&nbsp;<code>hierarchy_level</code>&nbsp;<strong>升序排序</strong>，然后按&nbsp;<code>subordinate_id</code>&nbsp;<strong>升序排序</strong>。</p>
+<p>查询格式如下所示。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例：</strong></p>
+<div class="example-block">
+<p><strong>输入：</strong></p>
+<p><code>Employees</code> 表：</p>
+<pre class="example-io">
++-------------+----------------+------------+---------+
+| employee_id | employee_name  | manager_id | salary  |
++-------------+----------------+------------+---------+
+| 1           | Alice          | NULL       | 150000  |
+| 2           | Bob            | 1          | 120000  |
+| 3           | Charlie        | 1          | 110000  |
+| 4           | David          | 2          | 105000  |
+| 5           | Eve            | 2          | 100000  |
+| 6           | Frank          | 3          | 95000   |
+| 7           | Grace          | 3          | 98000   |
+| 8           | Helen          | 5          | 90000   |
++-------------+----------------+------------+---------+
+</pre>
+<p><strong>输出：</strong></p>
+<pre class="example-io">
++----------------+------------------+------------------+-------------------+
+| subordinate_id | subordinate_name | hierarchy_level  | salary_difference |
++----------------+------------------+------------------+-------------------+
+| 2              | Bob              | 1                | -30000            |
+| 3              | Charlie          | 1                | -40000            |
+| 4              | David            | 2                | -45000            |
+| 5              | Eve              | 2                | -50000            |
+| 6              | Frank            | 2                | -55000            |
+| 7              | Grace            | 2                | -52000            |
+| 8              | Helen            | 3                | -60000            |
++----------------+------------------+------------------+-------------------+
+</pre>
+<p><strong>解释：</strong></p>
+<ul>
+	<li>Bob 和 Charlie 是 Alice 的直接下属（首席执行官）因此，hierarchy_level 为 1。</li>
+	<li>David 和 Eve 下属于 Bob，而&nbsp;Frank 和 Grace 下属于 Charlie，因此他们是二级下属（hierarchy_level 为 2）。</li>
+	<li>Helen 下属于&nbsp;Eve，因此&nbsp;Helen 为三级下属（hierarchy_level 为 3）。</li>
+	<li>薪资差异是相对于 Alice 的薪资 150000 计算的。</li>
+	<li>结果先以 hierarchy_level 升序排序，然后以 subordinate_id 升序排序。</li>
+</ul>
+<p><strong>注意：</strong>输出表先以 hierarchy_level 升序排序，然后以 subordinate_id 升序排序。</p>
+</div>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="cte">
+<h3>方法一：递归 CTE + 连接<a class="headerlink" href="#cte" title="Link to this heading"></a></h3>
+<p>首先，我们使用递归 CTE 计算出每个员工的层级，其中 CEO 的层级为 0，将 <code class="docutils literal notranslate"><span class="pre">employee_id</span></code>、<code class="docutils literal notranslate"><span class="pre">employee_name</span></code>、<code class="docutils literal notranslate"><span class="pre">hierarchy_level</span></code>、<code class="docutils literal notranslate"><span class="pre">manager_id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">salary</span></code> 保存到临时表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 中。</p>
+<p>然后，我们查询出 CEO 的薪资，将其保存到临时表 <code class="docutils literal notranslate"><span class="pre">P</span></code> 中。</p>
+<p>最后，我们连接 <code class="docutils literal notranslate"><span class="pre">T</span></code> 和 <code class="docutils literal notranslate"><span class="pre">P</span></code> 表，计算出每个下属的薪资差异，并按照 <code class="docutils literal notranslate"><span class="pre">hierarchy_level</span></code> 和 <code class="docutils literal notranslate"><span class="pre">subordinate_id</span></code> 进行排序。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">employee_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">employee_name</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">hierarchy_level</span><span class="p">,</span>
+<span class="w">            </span><span class="n">manager_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">salary</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Employees</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">manager_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+<span class="w">        </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="n">employee_name</span><span class="p">,</span>
+<span class="w">            </span><span class="n">hierarchy_level</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">hierarchy_level</span><span class="p">,</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="n">manager_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">T</span><span class="w"> </span><span class="n">t</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Employees</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">employee_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">manager_id</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">P</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">salary</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Employees</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">manager_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">employee_id</span><span class="w"> </span><span class="n">subordinate_id</span><span class="p">,</span>
+<span class="w">    </span><span class="n">employee_name</span><span class="w"> </span><span class="n">subordinate_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">hierarchy_level</span><span class="p">,</span>
+<span class="w">    </span><span class="n">t</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="n">salary_difference</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="n">t</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="n">p</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">hierarchy_level</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

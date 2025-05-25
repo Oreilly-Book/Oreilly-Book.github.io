@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3475. DNA Pattern Recognition &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3475. DNA Pattern Recognition</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#solution-1-fuzzy-matching-regular-expressions">Solution 1: Fuzzy Matching + Regular Expressions</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#pandas">Pandas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3475. DNA Pattern Recognition</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/24d0dce540bd4ec9827a2127cf817323.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="dna-pattern-recognition">
+<h1><a class="reference external" href="https://leetcode.com/problems/dna-pattern-recognition" rel="noreferrer" target="_blank">3475. DNA Pattern Recognition <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#dna-pattern-recognition" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3400-3499/3475.DNA%20Pattern%20Recognition/README.md"><span class="xref myst">中文文档</span></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>Table: <code>Samples</code></p>
+<pre>
++----------------+---------+
+| Column Name    | Type    | 
++----------------+---------+
+| sample_id      | int     |
+| dna_sequence   | varchar |
+| species        | varchar |
++----------------+---------+
+sample_id is the unique key for this table.
+Each row contains a DNA sequence represented as a string of characters (A, T, G, C) and the species it was collected from.
+</pre>
+<p>Biologists are studying basic patterns in DNA sequences. Write a solution to identify <code>sample_id</code> with the following patterns:</p>
+<ul>
+	<li>Sequences that <strong>start</strong> with <strong>ATG</strong>&nbsp;(a common <strong>start codon</strong>)</li>
+	<li>Sequences that <strong>end</strong> with either <strong>TAA</strong>, <strong>TAG</strong>, or <strong>TGA</strong>&nbsp;(<strong>stop codons</strong>)</li>
+	<li>Sequences containing the motif <strong>ATAT</strong>&nbsp;(a simple repeated pattern)</li>
+	<li>Sequences that have <strong>at least</strong> <code>3</code> <strong>consecutive</strong> <strong>G</strong>&nbsp;(like <strong>GGG</strong>&nbsp;or <strong>GGGG</strong>)</li>
+</ul>
+<p>Return <em>the result table ordered by&nbsp;</em><em>sample_id in <strong>ascending</strong> order</em>.</p>
+<p>The result format is in the following example.</p>
+<p>&nbsp;</p>
+<p><strong class="example">Example:</strong></p>
+<div class="example-block">
+<p><strong>Input:</strong></p>
+<p>Samples table:</p>
+<pre class="example-io">
++-----------+------------------+-----------+
+| sample_id | dna_sequence     | species   |
++-----------+------------------+-----------+
+| 1         | ATGCTAGCTAGCTAA  | Human     |
+| 2         | GGGTCAATCATC     | Human     |
+| 3         | ATATATCGTAGCTA   | Human     |
+| 4         | ATGGGGTCATCATAA  | Mouse     |
+| 5         | TCAGTCAGTCAG     | Mouse     |
+| 6         | ATATCGCGCTAG     | Zebrafish |
+| 7         | CGTATGCGTCGTA    | Zebrafish |
++-----------+------------------+-----------+
+</pre>
+<p><strong>Output:</strong></p>
+<pre class="example-io">
++-----------+------------------+-------------+-------------+------------+------------+------------+
+| sample_id | dna_sequence     | species     | has_start   | has_stop   | has_atat   | has_ggg    |
++-----------+------------------+-------------+-------------+------------+------------+------------+
+| 1         | ATGCTAGCTAGCTAA  | Human       | 1           | 1          | 0          | 0          |
+| 2         | GGGTCAATCATC     | Human       | 0           | 0          | 0          | 1          |
+| 3         | ATATATCGTAGCTA   | Human       | 0           | 0          | 1          | 0          |
+| 4         | ATGGGGTCATCATAA  | Mouse       | 1           | 1          | 0          | 1          |
+| 5         | TCAGTCAGTCAG     | Mouse       | 0           | 0          | 0          | 0          |
+| 6         | ATATCGCGCTAG     | Zebrafish   | 0           | 1          | 1          | 0          |
+| 7         | CGTATGCGTCGTA    | Zebrafish   | 0           | 0          | 0          | 0          |
++-----------+------------------+-------------+-------------+------------+------------+------------+
+</pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+	<li>Sample 1 (ATGCTAGCTAGCTAA):
+	<ul>
+		<li>Starts with ATG&nbsp;(has_start = 1)</li>
+		<li>Ends with TAA&nbsp;(has_stop = 1)</li>
+		<li>Does not contain ATAT&nbsp;(has_atat = 0)</li>
+		<li>Does not contain at least 3 consecutive &#39;G&#39;s (has_ggg = 0)</li>
+	</ul>
+	</li>
+	<li>Sample 2 (GGGTCAATCATC):
+	<ul>
+		<li>Does not start with ATG&nbsp;(has_start = 0)</li>
+		<li>Does not end with TAA, TAG, or TGA&nbsp;(has_stop = 0)</li>
+		<li>Does not contain ATAT&nbsp;(has_atat = 0)</li>
+		<li>Contains GGG&nbsp;(has_ggg = 1)</li>
+	</ul>
+	</li>
+	<li>Sample 3 (ATATATCGTAGCTA):
+	<ul>
+		<li>Does not start with ATG&nbsp;(has_start = 0)</li>
+		<li>Does not end with TAA, TAG, or TGA&nbsp;(has_stop = 0)</li>
+		<li>Contains ATAT&nbsp;(has_atat = 1)</li>
+		<li>Does not contain at least 3 consecutive &#39;G&#39;s (has_ggg = 0)</li>
+	</ul>
+	</li>
+	<li>Sample 4 (ATGGGGTCATCATAA):
+	<ul>
+		<li>Starts with ATG&nbsp;(has_start = 1)</li>
+		<li>Ends with TAA&nbsp;(has_stop = 1)</li>
+		<li>Does not contain ATAT&nbsp;(has_atat = 0)</li>
+		<li>Contains GGGG&nbsp;(has_ggg = 1)</li>
+	</ul>
+	</li>
+	<li>Sample 5 (TCAGTCAGTCAG):
+	<ul>
+		<li>Does not match any patterns (all fields = 0)</li>
+	</ul>
+	</li>
+	<li>Sample 6 (ATATCGCGCTAG):
+	<ul>
+		<li>Does not start with ATG&nbsp;(has_start = 0)</li>
+		<li>Ends with TAG&nbsp;(has_stop = 1)</li>
+		<li>Starts with ATAT&nbsp;(has_atat = 1)</li>
+		<li>Does not contain at least 3 consecutive &#39;G&#39;s (has_ggg = 0)</li>
+	</ul>
+	</li>
+	<li>Sample 7 (CGTATGCGTCGTA):
+	<ul>
+		<li>Does not start with ATG&nbsp;(has_start = 0)</li>
+		<li>Does not end with TAA, &quot;TAG&quot;, or &quot;TGA&quot; (has_stop = 0)</li>
+		<li>Does not contain ATAT&nbsp;(has_atat = 0)</li>
+		<li>Does not contain at least 3 consecutive &#39;G&#39;s (has_ggg = 0)</li>
+	</ul>
+	</li>
+</ul>
+<p><strong>Note:</strong></p>
+<ul>
+	<li>The result is ordered by sample_id in ascending order</li>
+	<li>For each pattern, 1 indicates the pattern is present and 0 indicates it is not present</li>
+</ul>
+</div>
+<!-- description:end -->
+</section>
+<section id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="solution-1-fuzzy-matching-regular-expressions">
+<h3>Solution 1: Fuzzy Matching + Regular Expressions<a class="headerlink" href="#solution-1-fuzzy-matching-regular-expressions" title="Link to this heading"></a></h3>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">LIKE</span></code> and <code class="docutils literal notranslate"><span class="pre">REGEXP</span></code> for pattern matching, where:</p>
+<ul class="simple">
+<li><p>LIKE <code class="docutils literal notranslate"><span class="pre">'ATG%'</span></code> checks if it starts with ATG</p></li>
+<li><p>REGEXP <code class="docutils literal notranslate"><span class="pre">'TAA$|TAG$|TGA$'</span></code> checks if it ends with TAA, TAG, or TGA ($ indicates the end of the string)</p></li>
+<li><p>LIKE <code class="docutils literal notranslate"><span class="pre">'%ATAT%'</span></code> checks if it contains ATAT</p></li>
+<li><p>REGEXP <code class="docutils literal notranslate"><span class="pre">'GGG+'</span></code> checks if it contains at least 3 consecutive Gs</p></li>
+</ul>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">sample_id</span><span class="p">,</span>
+<span class="w">    </span><span class="n">dna_sequence</span><span class="p">,</span>
+<span class="w">    </span><span class="n">species</span><span class="p">,</span>
+<span class="w">    </span><span class="n">dna_sequence</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;ATG%&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">has_start</span><span class="p">,</span>
+<span class="w">    </span><span class="n">dna_sequence</span><span class="w"> </span><span class="n">REGEXP</span><span class="w"> </span><span class="s1">&#39;TAA$|TAG$|TGA$&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">has_stop</span><span class="p">,</span>
+<span class="w">    </span><span class="n">dna_sequence</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%ATAT%&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">has_atat</span><span class="p">,</span>
+<span class="w">    </span><span class="n">dna_sequence</span><span class="w"> </span><span class="n">REGEXP</span><span class="w"> </span><span class="s1">&#39;GGG+&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">has_ggg</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Samples</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="pandas">
+<h4>Pandas<a class="headerlink" href="#pandas" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_dna_patterns</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;has_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;dna_sequence&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;ATG&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;has_stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;dna_sequence&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;TAA&quot;</span><span class="p">,</span> <span class="s2">&quot;TAG&quot;</span><span class="p">,</span> <span class="s2">&quot;TGA&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;has_atat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;dna_sequence&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;ATAT&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;has_ggg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;dna_sequence&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;GGG+&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">samples</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;sample_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3554. Find Category Recommendation Pairs &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3554. Find Category Recommendation Pairs</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#solution-1-join-group-aggregation">Solution 1: Join + Group Aggregation</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#pandas">Pandas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3554. Find Category Recommendation Pairs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/d339018baaa64cbeb47afbb2eccfacbc.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="find-category-recommendation-pairs">
+<h1><a class="reference external" href="https://leetcode.com/problems/find-category-recommendation-pairs" rel="noreferrer" target="_blank">3554. Find Category Recommendation Pairs <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#find-category-recommendation-pairs" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3500-3599/3554.Find%20Category%20Recommendation%20Pairs/README.md"><span class="xref myst">中文文档</span></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>Table: <code>ProductPurchases</code></p>
+<pre>
++-------------+------+
+| Column Name | Type | 
++-------------+------+
+| user_id     | int  |
+| product_id  | int  |
+| quantity    | int  |
++-------------+------+
+(user_id, product_id) is the unique identifier for this table. 
+Each row represents a purchase of a product by a user in a specific quantity.
+</pre>
+<p>Table: <code>ProductInfo</code></p>
+<pre>
++-------------+---------+
+| Column Name | Type    | 
++-------------+---------+
+| product_id  | int     |
+| category    | varchar |
+| price       | decimal |
++-------------+---------+
+product_id is the unique identifier for this table.
+Each row assigns a category and price to a product.
+</pre>
+<p>Amazon wants to understand shopping patterns across product categories. Write a solution to:</p>
+<ol>
+	<li>Find all <strong>category pairs</strong> (where <code>category1</code> &lt; <code>category2</code>)</li>
+	<li>For <strong>each category pair</strong>, determine the number of <strong>unique</strong> <strong>customers</strong> who purchased products from <strong>both</strong> categories</li>
+</ol>
+<p>A category pair is considered <strong>reportable</strong> if at least <code>3</code> different customers have purchased products from both categories.</p>
+<p>Return <em>the result table of reportable category pairs ordered by <strong>customer_count</strong> in <strong>descending</strong> order, and in case of a tie, by <strong>category1</strong> in <strong>ascending</strong> order lexicographically, and then by <strong>category2</strong> in <strong>ascending</strong> order.</em></p>
+<p>The result format is in the following example.</p>
+<p>&nbsp;</p>
+<p><strong class="example">Example:</strong></p>
+<div class="example-block">
+<p><strong>Input:</strong></p>
+<p>ProductPurchases table:</p>
+<pre class="example-io">
++---------+------------+----------+
+| user_id | product_id | quantity |
++---------+------------+----------+
+| 1       | 101        | 2        |
+| 1       | 102        | 1        |
+| 1       | 201        | 3        |
+| 1       | 301        | 1        |
+| 2       | 101        | 1        |
+| 2       | 102        | 2        |
+| 2       | 103        | 1        |
+| 2       | 201        | 5        |
+| 3       | 101        | 2        |
+| 3       | 103        | 1        |
+| 3       | 301        | 4        |
+| 3       | 401        | 2        |
+| 4       | 101        | 1        |
+| 4       | 201        | 3        |
+| 4       | 301        | 1        |
+| 4       | 401        | 2        |
+| 5       | 102        | 2        |
+| 5       | 103        | 1        |
+| 5       | 201        | 2        |
+| 5       | 202        | 3        |
++---------+------------+----------+
+</pre>
+<p>ProductInfo table:</p>
+<pre class="example-io">
++------------+-------------+-------+
+| product_id | category    | price |
++------------+-------------+-------+
+| 101        | Electronics | 100   |
+| 102        | Books       | 20    |
+| 103        | Books       | 35    |
+| 201        | Clothing    | 45    |
+| 202        | Clothing    | 60    |
+| 301        | Sports      | 75    |
+| 401        | Kitchen     | 50    |
++------------+-------------+-------+
+</pre>
+<p><strong>Output:</strong></p>
+<pre class="example-io">
++-------------+-------------+----------------+
+| category1   | category2   | customer_count |
++-------------+-------------+----------------+
+| Books       | Clothing    | 3              |
+| Books       | Electronics | 3              |
+| Clothing    | Electronics | 3              |
+| Electronics | Sports      | 3              |
++-------------+-------------+----------------+
+</pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+	<li><strong>Books-Clothing</strong>:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;ul&gt;
+	&lt;li&gt;User 1 purchased products from Books (102) and Clothing (201)&lt;/li&gt;
+	&lt;li&gt;User 2 purchased products from Books (102, 103) and Clothing (201)&lt;/li&gt;
+	&lt;li&gt;User 5 purchased products from Books (102, 103) and Clothing (201, 202)&lt;/li&gt;
+	&lt;li&gt;Total: 3 customers purchased from both categories&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Books-Electronics&lt;/strong&gt;:
+&lt;ul&gt;
+	&lt;li&gt;User 1 purchased products from Books (102) and Electronics (101)&lt;/li&gt;
+	&lt;li&gt;User 2 purchased products from Books (102, 103) and Electronics (101)&lt;/li&gt;
+	&lt;li&gt;User 3 purchased products from Books (103) and Electronics (101)&lt;/li&gt;
+	&lt;li&gt;Total: 3 customers purchased from both categories&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clothing-Electronics&lt;/strong&gt;:
+&lt;ul&gt;
+	&lt;li&gt;User 1 purchased products from Clothing (201) and Electronics (101)&lt;/li&gt;
+	&lt;li&gt;User 2 purchased products from Clothing (201) and Electronics (101)&lt;/li&gt;
+	&lt;li&gt;User 4 purchased products from Clothing (201) and Electronics (101)&lt;/li&gt;
+	&lt;li&gt;Total: 3 customers purchased from both categories&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Electronics-Sports&lt;/strong&gt;:
+&lt;ul&gt;
+	&lt;li&gt;User 1 purchased products from Electronics (101) and Sports (301)&lt;/li&gt;
+	&lt;li&gt;User 3 purchased products from Electronics (101) and Sports (301)&lt;/li&gt;
+	&lt;li&gt;User 4 purchased products from Electronics (101) and Sports (301)&lt;/li&gt;
+	&lt;li&gt;Total: 3 customers purchased from both categories&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Other category pairs like Clothing-Sports (only 2 customers: Users 1 and 4) and Books-Kitchen (only 1 customer: User 3) have fewer than 3 shared customers and are not included in the result.&lt;/li&gt;
+</pre></div>
+</div>
+</ul>
+<p>The result is ordered by customer_count in descending order. Since all pairs have the same customer_count of 3, they are ordered by category1 (then category2) in ascending order.</p>
+</div>
+<!-- description:end -->
+</section>
+<section id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="solution-1-join-group-aggregation">
+<h3>Solution 1: Join + Group Aggregation<a class="headerlink" href="#solution-1-join-group-aggregation" title="Link to this heading"></a></h3>
+<p>First, we join the <code class="docutils literal notranslate"><span class="pre">ProductPurchases</span></code> table and the <code class="docutils literal notranslate"><span class="pre">ProductInfo</span></code> table on <code class="docutils literal notranslate"><span class="pre">product_id</span></code> to obtain a <code class="docutils literal notranslate"><span class="pre">user_category</span></code> table consisting of <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">category</span></code>. Next, we self-join the <code class="docutils literal notranslate"><span class="pre">user_category</span></code> table to get all category pairs purchased by each user. Finally, we group these category pairs, count the number of users for each pair, and filter out the pairs with at least 3 users.</p>
+<p>Lastly, we sort the final result by customer count in descending order, then by <code class="docutils literal notranslate"><span class="pre">category1</span></code> in ascending order, and then by <code class="docutils literal notranslate"><span class="pre">category2</span></code> in ascending order.</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span>
+<span class="w">    </span><span class="n">user_category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span>
+<span class="w">            </span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">category</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">ProductPurchases</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">ProductInfo</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">product_id</span><span class="p">)</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">pair_per_user</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">a</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">a</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">category1</span><span class="p">,</span>
+<span class="w">            </span><span class="n">b</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">category2</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">user_category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">user_category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">category</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">category1</span><span class="p">,</span><span class="w"> </span><span class="n">category2</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">customer_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pair_per_user</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="n">customer_count</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="pandas">
+<h4>Pandas<a class="headerlink" href="#pandas" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_category_recommendation_pairs</span><span class="p">(</span>
+    <span class="n">product_purchases</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">product_info</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">product_purchases</span><span class="p">[[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;product_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">product_info</span><span class="p">[[</span><span class="s2">&quot;product_id&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;product_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span>
+    <span class="p">)</span>
+    <span class="n">user_category</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">])</span>
+    <span class="n">pair_per_user</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">user_category</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">user_category</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;category_x &lt; category_y&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;category_x&quot;</span><span class="p">:</span> <span class="s2">&quot;category1&quot;</span><span class="p">,</span> <span class="s2">&quot;category_y&quot;</span><span class="p">:</span> <span class="s2">&quot;category2&quot;</span><span class="p">})</span>
+    <span class="p">)</span>
+    <span class="n">pair_counts</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pair_per_user</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;category1&quot;</span><span class="p">,</span> <span class="s2">&quot;category2&quot;</span><span class="p">])[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;customer_count&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pair_counts</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;customer_count &gt;= 3&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;customer_count&quot;</span><span class="p">,</span> <span class="s2">&quot;category1&quot;</span><span class="p">,</span> <span class="s2">&quot;category2&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

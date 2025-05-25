@@ -1,0 +1,521 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>341. 扁平化嵌套列表迭代器 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">341. 扁平化嵌套列表迭代器</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#id4">方法一：递归</a><ul>
+<li><a class="reference internal" href="#python3">Python3</a></li>
+<li><a class="reference internal" href="#java">Java</a></li>
+<li><a class="reference internal" href="#c">C++</a></li>
+<li><a class="reference internal" href="#go">Go</a></li>
+<li><a class="reference internal" href="#typescript">TypeScript</a></li>
+<li><a class="reference internal" href="#rust">Rust</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">341. 扁平化嵌套列表迭代器</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/4cbece838b7f45c2a876cecadc1c15c8.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/flatten-nested-list-iterator" rel="noreferrer" target="_blank">341. 扁平化嵌套列表迭代器 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/0300-0399/0341.Flatten%20Nested%20List%20Iterator/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>给你一个嵌套的整数列表 <code>nestedList</code> 。每个元素要么是一个整数，要么是一个列表；该列表的元素也可能是整数或者是其他列表。请你实现一个迭代器将其扁平化，使之能够遍历这个列表中的所有整数。</p>
+<p>实现扁平迭代器类 <code>NestedIterator</code> ：</p>
+<ul>
+	<li><code>NestedIterator(List&lt;NestedInteger&gt; nestedList)</code> 用嵌套列表 <code>nestedList</code> 初始化迭代器。</li>
+	<li><code>int next()</code> 返回嵌套列表的下一个整数。</li>
+	<li><code>boolean hasNext()</code> 如果仍然存在待迭代的整数，返回 <code>true</code> ；否则，返回 <code>false</code> 。</li>
+</ul>
+<p>你的代码将会用下述伪代码检测：</p>
+<pre>
+initialize iterator with nestedList
+res = []
+while iterator.hasNext()
+    append iterator.next() to the end of res
+return res</pre>
+<p>如果 <code>res</code> 与预期的扁平化列表匹配，那么你的代码将会被判为正确。</p>
+<p>&nbsp;</p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>nestedList = [[1,1],2,[1,1]]
+<strong>输出：</strong>[1,1,2,1,1]
+<strong>解释：</strong>通过重复调用&nbsp;<em>next </em>直到&nbsp;<em>hasNex</em>t 返回 false，<em>next&nbsp;</em>返回的元素的顺序应该是: <code>[1,1,2,1,1]</code>。</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>nestedList = [1,[4,[6]]]
+<strong>输出：</strong>[1,4,6]
+<strong>解释：</strong>通过重复调用&nbsp;<em>next&nbsp;</em>直到&nbsp;<em>hasNex</em>t 返回 false，<em>next&nbsp;</em>返回的元素的顺序应该是: <code>[1,4,6]</code>。
+</pre>
+<p>&nbsp;</p>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= nestedList.length &lt;= 500</code></li>
+	<li>嵌套列表中的整数值在范围 <code>[-10<sup>6</sup>, 10<sup>6</sup>]</code> 内</li>
+</ul>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id4">
+<h3>方法一：递归<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>根据题意要求可以将 NestedInteger 数据结构视作一个 N 叉树，当元素为一个整数时，该节点是 N 叉树的叶子节点，当元素为一个整数数组时，该节点是 N 叉树的非叶子节点，数组中的每一个元素包含子树的所有节点。故直接递归遍历 N 叉树并记录所有的叶子节点即可。</p>
+<!-- tabs:start -->
+<section id="python3">
+<h4>Python3<a class="headerlink" href="#python3" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;&quot;&quot;</span>
+<span class="c1"># This is the interface that allows for creating nested lists.</span>
+<span class="c1"># You should not implement it, or speculate about its implementation</span>
+<span class="c1"># &quot;&quot;&quot;</span>
+<span class="c1"># class NestedInteger:</span>
+<span class="c1">#    def isInteger(self) -&gt; bool:</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        @return True if this NestedInteger holds a single integer, rather than a nested list.</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#    def getInteger(self) -&gt; int:</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        @return the single integer that this NestedInteger holds, if it holds a single integer</span>
+<span class="c1">#        Return None if this NestedInteger holds a nested list</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#    def getList(self) -&gt; [NestedInteger]:</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        @return the nested list that this NestedInteger holds, if it holds a nested list</span>
+<span class="c1">#        Return None if this NestedInteger holds a single integer</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NestedIterator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nestedList</span><span class="p">:</span> <span class="p">[</span><span class="n">NestedInteger</span><span class="p">]):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">ls</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ls</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">isInteger</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">nums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">getInteger</span><span class="p">())</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dfs</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">getList</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nums</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">dfs</span><span class="p">(</span><span class="n">nestedList</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nums</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">hasNext</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nums</span><span class="p">)</span>
+
+
+<span class="c1"># Your NestedIterator object will be instantiated and called as such:</span>
+<span class="c1"># i, v = NestedIterator(nestedList), []</span>
+<span class="c1"># while i.hasNext(): v.append(i.next())</span>
+</pre></div>
+</div>
+</section>
+<section id="java">
+<h4>Java<a class="headerlink" href="#java" title="Link to this heading"></a></h4>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * // This is the interface that allows for creating nested lists.</span>
+<span class="cm"> * // You should not implement it, or speculate about its implementation</span>
+<span class="cm"> * public interface NestedInteger {</span>
+<span class="cm"> *</span>
+<span class="cm"> *     // @return true if this NestedInteger holds a single integer, rather than a nested list.</span>
+<span class="cm"> *     public boolean isInteger();</span>
+<span class="cm"> *</span>
+<span class="cm"> *     // @return the single integer that this NestedInteger holds, if it holds a single integer</span>
+<span class="cm"> *     // Return null if this NestedInteger holds a nested list</span>
+<span class="cm"> *     public Integer getInteger();</span>
+<span class="cm"> *</span>
+<span class="cm"> *     // @return the nested list that this NestedInteger holds, if it holds a nested list</span>
+<span class="cm"> *     // Return empty list if this NestedInteger holds a single integer</span>
+<span class="cm"> *     public List&lt;NestedInteger&gt; getList();</span>
+<span class="cm"> * }</span>
+<span class="cm"> */</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">NestedIterator</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">NestedIterator</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">NestedInteger</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nestedList</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">dfs</span><span class="p">(</span><span class="n">nestedList</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="nf">next</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="o">++</span><span class="n">i</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasNext</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="na">size</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">NestedInteger</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ls</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ls</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">isInteger</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">nums</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">getInteger</span><span class="p">());</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">dfs</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">getList</span><span class="p">());</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Your NestedIterator object will be instantiated and called as such:</span>
+<span class="cm"> * NestedIterator i = new NestedIterator(nestedList);</span>
+<span class="cm"> * while (i.hasNext()) v[f()] = i.next();</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+</section>
+<section id="c">
+<h4>C++<a class="headerlink" href="#c" title="Link to this heading"></a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * // This is the interface that allows for creating nested lists.</span>
+<span class="cm"> * // You should not implement it, or speculate about its implementation</span>
+<span class="cm"> * class NestedInteger {</span>
+<span class="cm"> *   public:</span>
+<span class="cm"> *     // Return true if this NestedInteger holds a single integer, rather than a nested list.</span>
+<span class="cm"> *     bool isInteger() const;</span>
+<span class="cm"> *</span>
+<span class="cm"> *     // Return the single integer that this NestedInteger holds, if it holds a single integer</span>
+<span class="cm"> *     // The result is undefined if this NestedInteger holds a nested list</span>
+<span class="cm"> *     int getInteger() const;</span>
+<span class="cm"> *</span>
+<span class="cm"> *     // Return the nested list that this NestedInteger holds, if it holds a nested list</span>
+<span class="cm"> *     // The result is undefined if this NestedInteger holds a single integer</span>
+<span class="cm"> *     const vector&lt;NestedInteger&gt; &amp;getList() const;</span>
+<span class="cm"> * };</span>
+<span class="cm"> */</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NestedIterator</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">NestedIterator</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">NestedInteger</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nestedList</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">dfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">this</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dfs</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">NestedInteger</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">ls</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">ls</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">isInteger</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">nums</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">getInteger</span><span class="p">());</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">dfs</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">getList</span><span class="p">());</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="n">dfs</span><span class="p">(</span><span class="n">nestedList</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">next</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="o">++</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">hasNext</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nums</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Your NestedIterator object will be instantiated and called as such:</span>
+<span class="cm"> * NestedIterator i(nestedList);</span>
+<span class="cm"> * while (i.hasNext()) cout &lt;&lt; i.next();</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+</section>
+<section id="go">
+<h4>Go<a class="headerlink" href="#go" title="Link to this heading"></a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * // This is the interface that allows for creating nested lists.</span>
+<span class="cm"> * // You should not implement it, or speculate about its implementation</span>
+<span class="cm"> * type NestedInteger struct {</span>
+<span class="cm"> * }</span>
+<span class="cm"> *</span>
+<span class="cm"> * // Return true if this NestedInteger holds a single integer, rather than a nested list.</span>
+<span class="cm"> * func (this NestedInteger) IsInteger() bool {}</span>
+<span class="cm"> *</span>
+<span class="cm"> * // Return the single integer that this NestedInteger holds, if it holds a single integer</span>
+<span class="cm"> * // The result is undefined if this NestedInteger holds a nested list</span>
+<span class="cm"> * // So before calling this method, you should have a check</span>
+<span class="cm"> * func (this NestedInteger) GetInteger() int {}</span>
+<span class="cm"> *</span>
+<span class="cm"> * // Set this NestedInteger to hold a single integer.</span>
+<span class="cm"> * func (n *NestedInteger) SetInteger(value int) {}</span>
+<span class="cm"> *</span>
+<span class="cm"> * // Set this NestedInteger to hold a nested list and adds a nested integer to it.</span>
+<span class="cm"> * func (this *NestedInteger) Add(elem NestedInteger) {}</span>
+<span class="cm"> *</span>
+<span class="cm"> * // Return the nested list that this NestedInteger holds, if it holds a nested list</span>
+<span class="cm"> * // The list length is zero if this NestedInteger holds a single integer</span>
+<span class="cm"> * // You can access NestedInteger&#39;s List element directly if you want to modify it</span>
+<span class="cm"> * func (this NestedInteger) GetList() []*NestedInteger {}</span>
+<span class="cm"> */</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">NestedIterator</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">nums</span><span class="w"> </span><span class="p">[]</span><span class="kt">int</span>
+<span class="w">	</span><span class="nx">i</span><span class="w">    </span><span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">Constructor</span><span class="p">(</span><span class="nx">nestedList</span><span class="w"> </span><span class="p">[]</span><span class="o">*</span><span class="nx">NestedInteger</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">NestedIterator</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="kd">var</span><span class="w"> </span><span class="nx">dfs</span><span class="w"> </span><span class="kd">func</span><span class="p">([]</span><span class="o">*</span><span class="nx">NestedInteger</span><span class="p">)</span>
+<span class="w">	</span><span class="nx">nums</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
+<span class="w">	</span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+<span class="w">	</span><span class="nx">dfs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">ls</span><span class="w"> </span><span class="p">[]</span><span class="o">*</span><span class="nx">NestedInteger</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">ls</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="k">if</span><span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">IsInteger</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">				</span><span class="nx">nums</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span><span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">GetInteger</span><span class="p">())</span>
+<span class="w">			</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">				</span><span class="nx">dfs</span><span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">GetList</span><span class="p">())</span>
+<span class="w">			</span><span class="p">}</span>
+<span class="w">		</span><span class="p">}</span>
+<span class="w">	</span><span class="p">}</span>
+<span class="w">	</span><span class="nx">dfs</span><span class="p">(</span><span class="nx">nestedList</span><span class="p">)</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">NestedIterator</span><span class="p">{</span><span class="nx">nums</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">this</span><span class="w"> </span><span class="o">*</span><span class="nx">NestedIterator</span><span class="p">)</span><span class="w"> </span><span class="nx">Next</span><span class="p">()</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">this</span><span class="p">.</span><span class="nx">i</span><span class="o">++</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">this</span><span class="p">.</span><span class="nx">nums</span><span class="p">[</span><span class="nx">this</span><span class="p">.</span><span class="nx">i</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">this</span><span class="w"> </span><span class="o">*</span><span class="nx">NestedIterator</span><span class="p">)</span><span class="w"> </span><span class="nx">HasNext</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">this</span><span class="p">.</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">nums</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="typescript">
+<h4>TypeScript<a class="headerlink" href="#typescript" title="Link to this heading"></a></h4>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * // This is the interface that allows for creating nested lists.</span>
+<span class="cm"> * // You should not implement it, or speculate about its implementation</span>
+<span class="cm"> * class NestedInteger {</span>
+<span class="cm"> *     If value is provided, then it holds a single integer</span>
+<span class="cm"> *     Otherwise it holds an empty nested list</span>
+<span class="cm"> *     constructor(value?: number) {</span>
+<span class="cm"> *         ...</span>
+<span class="cm"> *     };</span>
+<span class="cm"> *</span>
+<span class="cm"> *     Return true if this NestedInteger holds a single integer, rather than a nested list.</span>
+<span class="cm"> *     isInteger(): boolean {</span>
+<span class="cm"> *         ...</span>
+<span class="cm"> *     };</span>
+<span class="cm"> *</span>
+<span class="cm"> *     Return the single integer that this NestedInteger holds, if it holds a single integer</span>
+<span class="cm"> *     Return null if this NestedInteger holds a nested list</span>
+<span class="cm"> *     getInteger(): number | null {</span>
+<span class="cm"> *         ...</span>
+<span class="cm"> *     };</span>
+<span class="cm"> *</span>
+<span class="cm"> *     Set this NestedInteger to hold a single integer equal to value.</span>
+<span class="cm"> *     setInteger(value: number) {</span>
+<span class="cm"> *         ...</span>
+<span class="cm"> *     };</span>
+<span class="cm"> *</span>
+<span class="cm"> *     Set this NestedInteger to hold a nested list and adds a nested integer elem to it.</span>
+<span class="cm"> *     add(elem: NestedInteger) {</span>
+<span class="cm"> *         ...</span>
+<span class="cm"> *     };</span>
+<span class="cm"> *</span>
+<span class="cm"> *     Return the nested list that this NestedInteger holds,</span>
+<span class="cm"> *     or an empty list if this NestedInteger holds a single integer</span>
+<span class="cm"> *     getList(): NestedInteger[] {</span>
+<span class="cm"> *         ...</span>
+<span class="cm"> *     };</span>
+<span class="cm"> * };</span>
+<span class="cm"> */</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nx">NestedIterator</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="nx">nums</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">nestedList</span><span class="o">:</span><span class="w"> </span><span class="kt">NestedInteger</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">dfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">ls</span><span class="o">:</span><span class="w"> </span><span class="kt">NestedInteger</span><span class="p">[])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">ls</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">isInteger</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">this</span><span class="p">.</span><span class="nx">nums</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">getInteger</span><span class="p">());</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">dfs</span><span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">getList</span><span class="p">());</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="nx">dfs</span><span class="p">(</span><span class="nx">nestedList</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">hasNext</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">nums</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">next</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">nums</span><span class="p">[</span><span class="o">++</span><span class="k">this</span><span class="p">.</span><span class="nx">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Your ParkingSystem object will be instantiated and called as such:</span>
+<span class="cm"> * var obj = new NestedIterator(nestedList)</span>
+<span class="cm"> * var a: number[] = []</span>
+<span class="cm"> * while (obj.hasNext()) a.push(obj.next());</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+</section>
+<section id="rust">
+<h4>Rust<a class="headerlink" href="#rust" title="Link to this heading"></a></h4>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// #[derive(Debug, PartialEq, Eq)]</span>
+<span class="c1">// pub enum NestedInteger {</span>
+<span class="c1">//   Int(i32),</span>
+<span class="c1">//   List(Vec&lt;NestedInteger&gt;)</span>
+<span class="c1">// }</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">NestedIterator</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">nums</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * `&amp;self` means the method takes an immutable reference.</span>
+<span class="sd"> * If you need a mutable reference, change it to `&amp;mut self` instead.</span>
+<span class="sd"> */</span>
+<span class="k">impl</span><span class="w"> </span><span class="n">NestedIterator</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">nested_list</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">NestedInteger</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">nums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<span class="w">        </span><span class="bp">Self</span><span class="p">::</span><span class="n">dfs</span><span class="p">(</span><span class="o">&amp;</span><span class="n">nested_list</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">nums</span><span class="p">);</span>
+<span class="w">        </span><span class="n">NestedIterator</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">nums</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">nums</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="n">result</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">has_next</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">nums</span><span class="p">.</span><span class="n">len</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">nested_list</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">NestedInteger</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">nums</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">ni</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nested_list</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">match</span><span class="w"> </span><span class="n">ni</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">NestedInteger</span><span class="p">::</span><span class="n">Int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">),</span>
+<span class="w">                </span><span class="n">NestedInteger</span><span class="p">::</span><span class="n">List</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="bp">Self</span><span class="p">::</span><span class="n">dfs</span><span class="p">(</span><span class="n">list</span><span class="p">,</span><span class="w"> </span><span class="n">nums</span><span class="p">),</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

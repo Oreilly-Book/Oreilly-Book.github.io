@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LCP 27. 黑盒光线反射 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">LCP 27. 黑盒光线反射</a><ul>
+<li><a class="reference internal" href="#id1">题目描述</a></li>
+<li><a class="reference internal" href="#id2">解法</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">LCP 27. 黑盒光线反射</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/22cb16dad5734ebe8f515c2758c6b145.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="lcp-27">
+<h1><a class="reference external" href="https://leetcode.cn/problems/IQvJ9i" rel="noreferrer" target="_blank">LCP 27. 黑盒光线反射 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#lcp-27" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>题目描述<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>秋日市集上有个奇怪的黑盒，黑盒的主视图为 n*m 的矩形。从黑盒的主视图来看，黑盒的上面和下面各均匀分布有 m 个小孔，黑盒的左面和右面各均匀分布有 n 个小孔。黑盒左上角小孔序号为 0，按顺时针编号，总共有 2*(m+n) 个小孔。每个小孔均可以打开或者关闭，初始时，所有小孔均处于关闭状态。每个小孔上的盖子均为镜面材质。例如一个 2*3 的黑盒主视图与其小孔分布如图所示:</p>
+<p><img alt="image.png" src="https://fastly.jsdelivr.net/gh/doocs/leetcode&#64;main/lcp/LCP%2027.%20%E9%BB%91%E7%9B%92%E5%85%89%E7%BA%BF%E5%8F%8D%E5%B0%84/images/1598951281-ZCBrif-image.png" /></p>
+<p>店长告诉小扣，这里是「几何学的快问快答」，店长可能有两种操作：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">open(int</span> <span class="pre">index,</span> <span class="pre">int</span> <span class="pre">direction)</span></code> - 若小孔处于关闭状态，则打开小孔，照入光线；否则直接照入光线；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">close(int</span> <span class="pre">index)</span></code> - 关闭处于打开状态小孔，店长保证不会关闭已处于关闭状态的小孔；</p></li>
+</ul>
+<p>其中：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>： 表示小孔序号</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">direction</span></code>：<code class="docutils literal notranslate"><span class="pre">1</span></code> 表示光线沿 $y=x$ 方向，<code class="docutils literal notranslate"><span class="pre">-1</span></code> 表示光线沿 $y=-x$ 方向。</p></li>
+</ul>
+<p><img alt="image.png" src="https://fastly.jsdelivr.net/gh/doocs/leetcode&#64;main/lcp/LCP%2027.%20%E9%BB%91%E7%9B%92%E5%85%89%E7%BA%BF%E5%8F%8D%E5%B0%84/images/1599620810-HdOlMi-image.png" /></p>
+<p>当光线照至边界时：若边界上的小孔为开启状态，则光线会射出；否则，光线会在小孔之间进行反射。特别地：</p>
+<ol class="arabic simple">
+<li><p>若光线射向未打开的拐角（黑盒顶点），则光线会原路反射回去；</p></li>
+<li><p>光线自拐角处的小孔照入时，只有一种入射方向（如自序号为 0 的小孔照入方向只能为 <code class="docutils literal notranslate"><span class="pre">-1</span></code>）</p></li>
+</ol>
+<p><img alt="image.png" src="https://fastly.jsdelivr.net/gh/doocs/leetcode&#64;main/lcp/LCP%2027.%20%E9%BB%91%E7%9B%92%E5%85%89%E7%BA%BF%E5%8F%8D%E5%B0%84/images/1598953840-DLiAsf-image.png" /></p>
+<p>请帮助小扣判断并返回店长每次照入的光线从几号小孔射出。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<div><p>输入：
+<code class="docutils literal notranslate"><span class="pre">[&quot;BlackBox&quot;,&quot;open&quot;,&quot;open&quot;,&quot;open&quot;,&quot;close&quot;,&quot;open&quot;]</span></code> &gt;<code class="docutils literal notranslate"><span class="pre">[[2,3],[6,-1],[4,-1],[0,-1],[6],[0,-1]]</span></code></p>
+<p>输出：<code class="docutils literal notranslate"><span class="pre">[null,6,4,6,null,4]</span></code></p>
+<p>解释：
+BlackBox b = BlackBox(2,3); // 新建一个 2x3 的黑盒
+b.open(6,-1) // 打开 6 号小孔，并沿 y=-x 方向照入光线，光线至 0 号小孔反射，从 6 号小孔射出
+b.open(4,-1) // 打开 4 号小孔，并沿 y=-x 方向照入光线，光线轨迹为 4-2-8-2-4，从 4 号小孔射出
+b.open(0,-1) // 打开 0 号小孔，并沿 y=-x 方向照入光线，由于 6 号小孔为开启状态，光线从 6 号小孔射出
+b.close(6) // 关闭 6 号小孔
+b.shoot(0,-1) // 从 0 号小孔沿 y=-x 方向照入光线，由于 6 号小孔为关闭状态，4 号小孔为开启状态，光线轨迹为 0-6-4，从 4 号小孔射出</p>
+</div></blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<div><p>输入：
+<code class="docutils literal notranslate"><span class="pre">[&quot;BlackBox&quot;,&quot;open&quot;,&quot;open&quot;,&quot;open&quot;,&quot;open&quot;,&quot;close&quot;,&quot;open&quot;,&quot;close&quot;,&quot;open&quot;]</span></code> &gt;<code class="docutils literal notranslate"><span class="pre">[[3,3],[1,-1],[5,1],[11,-1],[11,1],[1],[11,1],[5],[11,-1]]</span></code></p>
+<p>输出：<code class="docutils literal notranslate"><span class="pre">[null,1,1,5,1,null,5,null,11]</span></code></p>
+<p>解释：</p>
+<p><img alt="image.png" src="https://fastly.jsdelivr.net/gh/doocs/leetcode&#64;main/lcp/LCP%2027.%20%E9%BB%91%E7%9B%92%E5%85%89%E7%BA%BF%E5%8F%8D%E5%B0%84/images/1599204202-yGDMVk-image.png" /></p>
+<p>BlackBox b = BlackBox(3,3); // 新建一个 3x3 的黑盒
+b.open(1,-1) // 打开 1 号小孔，并沿 y=-x 方向照入光线，光线轨迹为 1-5-7-11-1，从 1 号小孔射出
+b.open(5,1) // 打开 5 号小孔，并沿 y=x 方向照入光线，光线轨迹为 5-7-11-1，从 1 号小孔射出
+b.open(11,-1) // 打开 11 号小孔，并沿逆 y=-x 方向照入光线，光线轨迹为 11-7-5，从 5 号小孔射出
+b.open(11,1) // 从 11 号小孔沿 y=x 方向照入光线，光线轨迹为 11-1，从 1 号小孔射出
+b.close(1) // 关闭 1 号小孔
+b.open(11,1) // 从 11 号小孔沿 y=x 方向照入光线，光线轨迹为 11-1-5，从 5 号小孔射出
+b.close(5) // 关闭 5 号小孔
+b.open(11,-1) // 从 11 号小孔沿 y=-x 方向照入光线，光线轨迹为 11-1-5-7-11，从 11 号小孔射出</p>
+</div></blockquote>
+<p><strong>提示：</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&lt;=</span> <span class="pre">n,</span> <span class="pre">m</span> <span class="pre">&lt;=</span> <span class="pre">10000</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&lt;=</span> <span class="pre">操作次数</span> <span class="pre">&lt;=</span> <span class="pre">10000</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">direction</span></code> 仅为 <code class="docutils literal notranslate"><span class="pre">1</span></code> 或 <code class="docutils literal notranslate"><span class="pre">-1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">index</span> <span class="pre">&lt;</span> <span class="pre">2*(m+n)</span></code></p></li>
+</ul>
+<!-- description:end -->
+</section>
+<section id="id2">
+<h2>解法<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<!-- problem:end -->
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

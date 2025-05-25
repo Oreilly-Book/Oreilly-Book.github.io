@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3554. 查找类别推荐对 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3554. 查找类别推荐对</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#id4">方法一：连接 + 分组聚合</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#pandas">Pandas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3554. 查找类别推荐对</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/c37f6624354842448897530a7fe6926b.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/find-category-recommendation-pairs" rel="noreferrer" target="_blank">3554. 查找类别推荐对 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3500-3599/3554.Find%20Category%20Recommendation%20Pairs/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：<code>ProductPurchases</code></p>
+<pre>
++-------------+------+
+| Column Name | Type | 
++-------------+------+
+| user_id     | int  |
+| product_id  | int  |
+| quantity    | int  |
++-------------+------+
+(user_id, product_id) 是这张表的唯一主键。
+每一行代表用户以特定数量购买的一种产品。
+</pre>
+<p>表：<code>ProductInfo</code></p>
+<pre>
++-------------+---------+
+| Column Name | Type    | 
++-------------+---------+
+| product_id  | int     |
+| category    | varchar |
+| price       | decimal |
++-------------+---------+
+product_id 是这张表的唯一主键。
+每一行表示一件商品的类别和价格。
+</pre>
+<p>亚马逊想要了解不同产品类别的购物模式。编写一个解决方案：</p>
+<ol>
+	<li>查找所有 <strong>类别对</strong>（其中&nbsp;<code>category1</code> &lt; <code>category2</code>）</li>
+	<li>对于 <strong>每个类别对</strong>，确定 <strong>同时</strong> 购买了两类别产品的 <strong>不同用户</strong> 数量</li>
+</ol>
+<p>如果至少有 <code>3</code> 个不同的客户购买了两个类别的产品，则类别对被视为 <strong>可报告的</strong>。</p>
+<p>返回可报告类别对的结果表以<em>&nbsp;</em><strong>customer_count</strong><em>&nbsp;</em><strong>降序</strong><em> </em>排序，并且为了防止排序持平，以<em>&nbsp;</em><strong>category1 </strong>字典序<strong> 升序</strong>&nbsp;排序，然后以&nbsp;<strong>category2 升序</strong>&nbsp;排序。</p>
+<p>结果格式如下所示。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例：</strong></p>
+<div class="example-block">
+<p><strong>输入：</strong></p>
+<p>ProductPurchases 表：</p>
+<pre class="example-io">
++---------+------------+----------+
+| user_id | product_id | quantity |
++---------+------------+----------+
+| 1       | 101        | 2        |
+| 1       | 102        | 1        |
+| 1       | 201        | 3        |
+| 1       | 301        | 1        |
+| 2       | 101        | 1        |
+| 2       | 102        | 2        |
+| 2       | 103        | 1        |
+| 2       | 201        | 5        |
+| 3       | 101        | 2        |
+| 3       | 103        | 1        |
+| 3       | 301        | 4        |
+| 3       | 401        | 2        |
+| 4       | 101        | 1        |
+| 4       | 201        | 3        |
+| 4       | 301        | 1        |
+| 4       | 401        | 2        |
+| 5       | 102        | 2        |
+| 5       | 103        | 1        |
+| 5       | 201        | 2        |
+| 5       | 202        | 3        |
++---------+------------+----------+
+</pre>
+<p>ProductInfo 表：</p>
+<pre class="example-io">
++------------+-------------+-------+
+| product_id | category    | price |
++------------+-------------+-------+
+| 101        | Electronics | 100   |
+| 102        | Books       | 20    |
+| 103        | Books       | 35    |
+| 201        | Clothing    | 45    |
+| 202        | Clothing    | 60    |
+| 301        | Sports      | 75    |
+| 401        | Kitchen     | 50    |
++------------+-------------+-------+
+</pre>
+<p><strong>输出：</strong></p>
+<pre class="example-io">
++-------------+-------------+----------------+
+| category1   | category2   | customer_count |
++-------------+-------------+----------------+
+| Books       | Clothing    | 3              |
+| Books       | Electronics | 3              |
+| Clothing    | Electronics | 3              |
+| Electronics | Sports      | 3              |
++-------------+-------------+----------------+
+</pre>
+<p><strong>解释：</strong></p>
+<ul>
+	<li><strong>Books-Clothing</strong>:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;ul&gt;
+	&lt;li&gt;用户 1 购买来自 Books (102) 和 Clothing (201) 的商品&lt;/li&gt;
+	&lt;li&gt;用户 2 购买来自 Books (102, 103) 和 Clothing (201) 的商品&lt;/li&gt;
+	&lt;li&gt;用户 5 购买来自 Books (102, 103) 和 Clothing (201, 202) 的商品&lt;/li&gt;
+	&lt;li&gt;共计：3 个用户购买同一类别的商品&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Books-Electronics&lt;/strong&gt;:
+&lt;ul&gt;
+	&lt;li&gt;用户 1 购买来自 Books (102) 和 Electronics (101) 的商品&lt;/li&gt;
+	&lt;li&gt;用户 2 购买来自 Books (102, 103) 和 Electronics (101)&amp;nbsp;的商品&lt;/li&gt;
+	&lt;li&gt;用户 3&amp;nbsp;购买来自 Books (103) 和 Electronics (101)&amp;nbsp;的商品&lt;/li&gt;
+	&lt;li&gt;共计：3 个消费者购买同一类别的商品&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clothing-Electronics&lt;/strong&gt;:
+&lt;ul&gt;
+	&lt;li&gt;用户 1 购买来自 Clothing (201) 和 Electronics (101) 的商品&lt;/li&gt;
+	&lt;li&gt;用户 2 购买来自 Clothing (201) 和 Electronics (101) 的商品&lt;/li&gt;
+	&lt;li&gt;用户 4&amp;nbsp;购买来自 Clothing (201) 和 Electronics (101) 的商品&lt;/li&gt;
+	&lt;li&gt;共计：3 个消费者购买同一类别的商品&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Electronics-Sports&lt;/strong&gt;:
+&lt;ul&gt;
+	&lt;li&gt;用户 1 购买来自 Electronics (101) 和 Sports (301) 的商品&lt;/li&gt;
+	&lt;li&gt;用户 3&amp;nbsp;购买来自 Electronics (101) 和 Sports (301) 的商品&lt;/li&gt;
+	&lt;li&gt;用户 4&amp;nbsp;购买来自 Electronics (101) 和 Sports (301) 的商品&lt;/li&gt;
+	&lt;li&gt;共计：3 个消费者购买同一类别的商品&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;其它类别对比如 Clothing-Sports（只有 2 个消费者：用户 1 和 4）和 Books-Kitchen（只有 1 个消费者：用户 3）共同的消费者少于 3 个，因此不包含在结果内。&lt;/li&gt;
+</pre></div>
+</div>
+</ul>
+<p>结果按&nbsp;customer_count 降序排列。由于所有对都有相同的客户数量 3，它们按 category1（然后是 category2）升序排列。</p>
+</div>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id4">
+<h3>方法一：连接 + 分组聚合<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>我们先将表 <code class="docutils literal notranslate"><span class="pre">ProductPurchases</span></code> 和表 <code class="docutils literal notranslate"><span class="pre">ProductInfo</span></code> 按照 <code class="docutils literal notranslate"><span class="pre">product_id</span></code> 进行连接，得到由 <code class="docutils literal notranslate"><span class="pre">user_id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">category</span></code> 组成的表 <code class="docutils literal notranslate"><span class="pre">user_category</span></code>。接着，我们在 <code class="docutils literal notranslate"><span class="pre">user_category</span></code> 表中自连接，得到每个用户购买的所有类别对。最后，我们对这些类别对进行分组，统计每个类别对的用户数量，并筛选出用户数量大于等于 3 的类别对。</p>
+<p>最后，我们按照用户数量降序、<code class="docutils literal notranslate"><span class="pre">category1</span></code> 升序、<code class="docutils literal notranslate"><span class="pre">category2</span></code> 升序的顺序进行排序，得到最终结果。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span>
+<span class="w">    </span><span class="n">user_category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span>
+<span class="w">            </span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">category</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">ProductPurchases</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">ProductInfo</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">product_id</span><span class="p">)</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">pair_per_user</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">a</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">            </span><span class="n">a</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">category1</span><span class="p">,</span>
+<span class="w">            </span><span class="n">b</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">category2</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">user_category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a</span>
+<span class="w">            </span><span class="k">JOIN</span><span class="w"> </span><span class="n">user_category</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">category</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">category1</span><span class="p">,</span><span class="w"> </span><span class="n">category2</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">customer_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pair_per_user</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="n">customer_count</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="pandas">
+<h4>Pandas<a class="headerlink" href="#pandas" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_category_recommendation_pairs</span><span class="p">(</span>
+    <span class="n">product_purchases</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">product_info</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">product_purchases</span><span class="p">[[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;product_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">product_info</span><span class="p">[[</span><span class="s2">&quot;product_id&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;product_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span>
+    <span class="p">)</span>
+    <span class="n">user_category</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">])</span>
+    <span class="n">pair_per_user</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">user_category</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">user_category</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;category_x &lt; category_y&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;category_x&quot;</span><span class="p">:</span> <span class="s2">&quot;category1&quot;</span><span class="p">,</span> <span class="s2">&quot;category_y&quot;</span><span class="p">:</span> <span class="s2">&quot;category2&quot;</span><span class="p">})</span>
+    <span class="p">)</span>
+    <span class="n">pair_counts</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pair_per_user</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;category1&quot;</span><span class="p">,</span> <span class="s2">&quot;category2&quot;</span><span class="p">])[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;customer_count&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pair_counts</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;customer_count &gt;= 3&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;customer_count&quot;</span><span class="p">,</span> <span class="s2">&quot;category1&quot;</span><span class="p">,</span> <span class="s2">&quot;category2&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

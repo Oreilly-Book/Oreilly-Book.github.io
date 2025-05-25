@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3497. 分析订阅转化 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3497. 分析订阅转化</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#id4">方法一：分组 + 条件筛选 + 等值连接</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+<li><a class="reference internal" href="#pandas">Pandas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3497. 分析订阅转化</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/746973df8e39433c8d906dcbbbc1fd3f.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/analyze-subscription-conversion" rel="noreferrer" target="_blank">3497. 分析订阅转化 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3400-3499/3497.Analyze%20Subscription%20Conversion/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：<code>UserActivity</code></p>
+<pre>
++------------------+---------+
+| Column Name      | Type    | 
++------------------+---------+
+| user_id          | int     |
+| activity_date    | date    |
+| activity_type    | varchar |
+| activity_duration| int     |
++------------------+---------+
+(user_id, activity_date, activity_type) 是这张表的唯一主键。
+activity_type 是('free_trial', 'paid', 'cancelled')中的一个。
+activity_duration 是用户当天在平台上花费的分钟数。
+每一行表示一个用户在特定日期的活动。
+</pre>
+<p>订阅服务想要分析用户行为模式。公司提供7天免费试用，试用结束后，用户可以选择订阅 <strong>付费计划</strong> 或 <strong>取消</strong>。编写解决方案：</p>
+<ol>
+	<li>查找从免费试用转为付费订阅的用户</li>
+	<li>计算每位用户在 <strong>免费试用</strong> 期间的 <strong>平均每日活动时长</strong>（四舍五入至小数点后 <code>2</code> 位）</li>
+	<li>计算每位用户在 <strong>付费</strong> 订阅期间的 <strong>平均每日活动时长</strong>（四舍五入到小数点后&nbsp;<code>2</code> 位）</li>
+</ol>
+<p>返回结果表以<em>&nbsp;</em><code>user_id</code><em> </em><strong>升序&nbsp;</strong>排序。</p>
+<p>结果格式如下所示。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例：</strong></p>
+<div class="example-block">
+<p><strong>输入：</strong></p>
+<p>UserActivity 表：</p>
+<pre class="example-io">
++---------+---------------+---------------+-------------------+
+| user_id | activity_date | activity_type | activity_duration |
++---------+---------------+---------------+-------------------+
+| 1       | 2023-01-01    | free_trial    | 45                |
+| 1       | 2023-01-02    | free_trial    | 30                |
+| 1       | 2023-01-05    | free_trial    | 60                |
+| 1       | 2023-01-10    | paid          | 75                |
+| 1       | 2023-01-12    | paid          | 90                |
+| 1       | 2023-01-15    | paid          | 65                |
+| 2       | 2023-02-01    | free_trial    | 55                |
+| 2       | 2023-02-03    | free_trial    | 25                |
+| 2       | 2023-02-07    | free_trial    | 50                |
+| 2       | 2023-02-10    | cancelled     | 0                 |
+| 3       | 2023-03-05    | free_trial    | 70                |
+| 3       | 2023-03-06    | free_trial    | 60                |
+| 3       | 2023-03-08    | free_trial    | 80                |
+| 3       | 2023-03-12    | paid          | 50                |
+| 3       | 2023-03-15    | paid          | 55                |
+| 3       | 2023-03-20    | paid          | 85                |
+| 4       | 2023-04-01    | free_trial    | 40                |
+| 4       | 2023-04-03    | free_trial    | 35                |
+| 4       | 2023-04-05    | paid          | 45                |
+| 4       | 2023-04-07    | cancelled     | 0                 |
++---------+---------------+---------------+-------------------+
+</pre>
+<p><strong>输出：</strong></p>
+<pre class="example-io">
++---------+--------------------+-------------------+
+| user_id | trial_avg_duration | paid_avg_duration |
++---------+--------------------+-------------------+
+| 1       | 45.00              | 76.67             |
+| 3       | 70.00              | 63.33             |
+| 4       | 37.50              | 45.00             |
++---------+--------------------+-------------------+
+</pre>
+<p><strong>解释：</strong></p>
+<ul>
+	<li><strong>用户 1:</strong>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;ul&gt;
+	&lt;li&gt;体验了 3 天免费试用，时长分别为 45，30 和 60 分钟。&lt;/li&gt;
+	&lt;li&gt;平均试用时长：(45 + 30 + 60) / 3 = 45.00 分钟。&lt;/li&gt;
+	&lt;li&gt;拥有 3 天付费订阅，时长分别为 75，90 和 65分钟。&lt;/li&gt;
+	&lt;li&gt;平均花费时长：(75 + 90 + 65) / 3 = 76.67 分钟。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用户 2:&lt;/strong&gt;
+&lt;ul&gt;
+	&lt;li&gt;体验了 3 天免费试用，时长分别为 55，25 和 50 分钟。&lt;/li&gt;
+	&lt;li&gt;平均试用时长：(55 + 25 + 50) / 3 = 43.33 分钟。&lt;/li&gt;
+	&lt;li&gt;没有转为付费订阅（只有&amp;nbsp;free_trial 和 cancelled 活动）。&lt;/li&gt;
+	&lt;li&gt;未包含在输出中，因为他未转换为付费用户。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用户 3:&lt;/strong&gt;
+&lt;ul&gt;
+	&lt;li&gt;体验了 3 天免费试用，时长分别为 70，60 和 80 分钟。&lt;/li&gt;
+	&lt;li&gt;平均试用时长：(70 + 60 + 80) / 3 = 70.00 分钟。&lt;/li&gt;
+	&lt;li&gt;拥有 3 天付费订阅，时长分别为 50，55 和 85 分钟。&lt;/li&gt;
+	&lt;li&gt;平均花费时长：(50 + 55 + 85) / 3 = 63.33 分钟。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用户 4:&lt;/strong&gt;
+&lt;ul&gt;
+	&lt;li&gt;体验了 2 天免费试用，时长分别为 40 和 35 分钟。&lt;/li&gt;
+	&lt;li&gt;平均试用时长：(40 + 35) / 2 = 37.50 分钟。&lt;/li&gt;
+	&lt;li&gt;在取消前有 1 天的付费订阅，时长为45分钟。&lt;/li&gt;
+	&lt;li&gt;平均花费时长：45.00 分钟。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+</pre></div>
+</div>
+</ul>
+<p>结果表仅包括从免费试用转为付费订阅的用户（用户 1，3 和 4），并且以&nbsp;user_id 升序排序。</p>
+</div>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id4">
+<h3>方法一：分组 + 条件筛选 + 等值连接<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>我们首先将表中的数据进行筛选，找出所有 <code class="docutils literal notranslate"><span class="pre">activity_type</span></code> 不等于 <code class="docutils literal notranslate"><span class="pre">cancelled</span></code> 的数据，将数据按照 <code class="docutils literal notranslate"><span class="pre">user_id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">activity_type</span></code> 进行分组，求得每组的时长 <code class="docutils literal notranslate"><span class="pre">duration</span></code>，记录在表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 中。</p>
+<p>接下来，我们从表 <code class="docutils literal notranslate"><span class="pre">T</span></code> 中筛选出 <code class="docutils literal notranslate"><span class="pre">activity_type</span></code> 为 <code class="docutils literal notranslate"><span class="pre">free_trial</span></code> 和 <code class="docutils literal notranslate"><span class="pre">paid</span></code> 的记录，分别记录在表 <code class="docutils literal notranslate"><span class="pre">F</span></code> 和 <code class="docutils literal notranslate"><span class="pre">P</span></code> 中，最后将这两张表按照 <code class="docutils literal notranslate"><span class="pre">user_id</span></code> 进行等值连接，并按照题目要求筛选出对应的字段并排序，得到最终结果。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">activity_duration</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">duration</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">UserActivity</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">activity_type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">&#39;cancelled&#39;</span>
+<span class="w">        </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">F</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="n">trial_avg_duration</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">T</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">activity_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;free_trial&#39;</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">P</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="n">paid_avg_duration</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">T</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">activity_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;paid&#39;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">trial_avg_duration</span><span class="p">,</span><span class="w"> </span><span class="n">paid_avg_duration</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">F</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="pandas">
+<h4>Pandas<a class="headerlink" href="#pandas" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_subscription_conversion</span><span class="p">(</span><span class="n">user_activity</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">user_activity</span><span class="p">[</span><span class="n">user_activity</span><span class="p">[</span><span class="s2">&quot;activity_type&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;cancelled&quot;</span><span class="p">]</span>
+
+    <span class="n">df_grouped</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;activity_type&quot;</span><span class="p">])[</span><span class="s2">&quot;activity_duration&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="n">df_free_trial</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df_grouped</span><span class="p">[</span><span class="n">df_grouped</span><span class="p">[</span><span class="s2">&quot;activity_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;free_trial&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;activity_duration&quot;</span><span class="p">:</span> <span class="s2">&quot;trial_avg_duration&quot;</span><span class="p">})</span>
+        <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;activity_type&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="n">df_paid</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df_grouped</span><span class="p">[</span><span class="n">df_grouped</span><span class="p">[</span><span class="s2">&quot;activity_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;paid&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;activity_duration&quot;</span><span class="p">:</span> <span class="s2">&quot;paid_avg_duration&quot;</span><span class="p">})</span>
+        <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;activity_type&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">df_free_trial</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_paid</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+        <span class="s2">&quot;user_id&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

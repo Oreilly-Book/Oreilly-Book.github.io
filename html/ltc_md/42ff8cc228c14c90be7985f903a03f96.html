@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3052. 最大化商品 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3052. 最大化商品 🔒</a><ul>
+<li><a class="reference internal" href="#id2">题目描述</a></li>
+<li><a class="reference internal" href="#id3">解法</a><ul>
+<li><a class="reference internal" href="#id4">方法一：连接查询 + 合并</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3052. 最大化商品 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/42ff8cc228c14c90be7985f903a03f96.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="id1">
+<h1><a class="reference external" href="https://leetcode.cn/problems/maximize-items" rel="noreferrer" target="_blank">3052. 最大化商品 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3000-3099/3052.Maximize%20Items/README_EN.md"><span class="xref myst">English Version</span></a></p>
+<section id="id2">
+<h2>题目描述<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>表：<font face="monospace"><code>Inventory</code></font></p>
+<pre>
++----------------+---------+ 
+| Column Name    | Type    | 
++----------------+---------+ 
+| item_id        | int     | 
+| item_type      | varchar |
+| item_category  | varchar |
+| square_footage | decimal |
++----------------+---------+
+item_id 是这张表中有不同值的列。
+每一行包含 item id，item type，item category 和 sqaure footage。
+</pre>
+<p>Leetcode 仓库想要最大化它能够在&nbsp;<code>500,000</code> 平方英尺的仓库中储存的商品数。他想要尽可能多地存储 <strong>主要</strong> 商品，然后用 <strong>剩下</strong> 的空间存储最大数量的 <strong>非主要</strong> 商品。</p>
+<p>编写一个解决方案来找到能够在&nbsp;<code>500,000</code>&nbsp;平方英尺的仓库中存储&nbsp;<b>主要</b>&nbsp;和&nbsp;<strong>非主要</strong>&nbsp;商品的数量。输出商品类型&nbsp;<code>prime_eligible</code>&nbsp;和&nbsp;<code>not_prime</code>，以及能储存商品的最大数量。</p>
+<p><strong>注意：</strong></p>
+<ul>
+	<li>商品 <strong>数</strong> 必须是一个整数。</li>
+	<li>如果&nbsp;<strong>not_prime</strong>&nbsp;分类的数量是&nbsp;<code>0</code>，你应当对这部分分类 <strong>输出</strong>&nbsp;<code>0</code>&nbsp;。</li>
+</ul>
+<p>返回结果表，以商品数 <strong>升序</strong> 排序。</p>
+<p>结果格式如下所示。</p>
+<p>&nbsp;</p>
+<p><strong class="example">示例 1：</strong></p>
+<pre>
+<strong>输入：</strong> 
+Inventory 表：
++---------+----------------+---------------+----------------+
+| item_id | item_type      | item_category | square_footage | 
++---------+----------------+---------------+----------------+
+| 1374    | prime_eligible | Watches       | 68.00          | 
+| 4245    | not_prime      | Art           | 26.40          | 
+| 5743    | prime_eligible | Software      | 325.00         | 
+| 8543    | not_prime      | Clothing      | 64.50          |  
+| 2556    | not_prime      | Shoes         | 15.00          |
+| 2452    | prime_eligible | Scientific    | 85.00          |
+| 3255    | not_prime      | Furniture     | 22.60          | 
+| 1672    | prime_eligible | Beauty        | 8.50           |  
+| 4256    | prime_eligible | Furniture     | 55.50          |
+| 6325    | prime_eligible | Food          | 13.20          | 
++---------+----------------+---------------+----------------+
+<strong>输出：</strong> 
++----------------+-------------+
+| item_type      | item_count  | 
++----------------+-------------+
+| prime_eligible | 5400        | 
+| not_prime      | 8           | 
++----------------+-------------+
+<strong>解释：</strong> 
+- prime-eligible 分类包括总计 6 件商品，总面积为 555.20 (68 + 325 + 85 + 8.50 + 55.50 + 13.20) 平方英尺。可以存放这 6 种物品的 900 件组合，总计 5400 件，占地 499,680 平方英尺。
+- 对于 not_prime 分类，共有 4 件商品，总面积为 128.50 平方英尺。在减去 prime-eligible 商品使用的空间之后 (500,000 - 499,680 = 320)，还有放 2 件 non-prime 商品的空间，在320平方英尺的面积内，共容纳 8 个 non-prime 商品。
+输出表以商品数量降序排序。</pre>
+<!-- description:end -->
+</section>
+<section id="id3">
+<h2>解法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="id4">
+<h3>方法一：连接查询 + 合并<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>我们先计算出所有 prime_eligible 类型的物品的总面积，记录在 <code class="docutils literal notranslate"><span class="pre">T</span></code> 表的 <code class="docutils literal notranslate"><span class="pre">s</span></code> 字段中。</p>
+<p>接下来，我们分别计算 prime_eligible 和 not_prime 类型的物品的数量。对于 prime_eligible 类型的物品，我们可以存储的份数是 $\lfloor \frac{500000}{s} \rfloor$，对于 not_prime 类型的物品，我们可以存储的份数是 $\lfloor \frac{500000 \mod s}{\sum \textit{s1}} \rfloor$。其中 $\sum \textit{s1}$ 是所有 not_prime 类型的物品的总面积。再分别乘上 prime_eligible 和 not_prime 类型的物品的数量，就是我们的结果。</p>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">square_footage</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Inventory</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">item_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;prime_eligible&#39;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="s1">&#39;prime_eligible&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">item_type</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">FLOOR</span><span class="p">(</span><span class="mi">500000</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">item_count</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Inventory</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">item_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;prime_eligible&#39;</span>
+<span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="s1">&#39;not_prime&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">IFNULL</span><span class="p">(</span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">FLOOR</span><span class="p">(</span><span class="k">IF</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500000</span><span class="p">,</span><span class="w"> </span><span class="mi">500000</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">square_footage</span><span class="p">)),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Inventory</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">item_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;not_prime&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

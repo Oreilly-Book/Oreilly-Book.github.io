@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<template id="tmpl_gotoTop"><div id="gotoTop">
+  <button>Back to top</button>
+</div></template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3156. Employee Task Duration and Concurrent Tasks 🔒 &mdash; 优繆落 youmoula 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/goto-top/style.css?v=c152bd81" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34088549"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+      <script src="../_static/goto-top/main.js?v=69fc67a6"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            优繆落 youmoula
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">3156. Employee Task Duration and Concurrent Tasks 🔒</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#solution-1-merge-join">Solution 1: Merge + Join</a><ul>
+<li><a class="reference internal" href="#mysql">MySQL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">优繆落 youmoula</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3156. Employee Task Duration and Concurrent Tasks 🔒</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ltc_md/bca9d0c635254492a7c8a00cbd4a2a31_en.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- problem:start -->
+<section id="employee-task-duration-and-concurrent-tasks">
+<h1><a class="reference external" href="https://leetcode.com/problems/employee-task-duration-and-concurrent-tasks" rel="noreferrer" target="_blank">3156. Employee Task Duration and Concurrent Tasks 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a><a class="headerlink" href="#employee-task-duration-and-concurrent-tasks" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#/solution/3100-3199/3156.Employee%20Task%20Duration%20and%20Concurrent%20Tasks/README.md"><span class="xref myst">中文文档</span></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<!-- description:start -->
+<p>Table: <code>Tasks</code></p>
+<pre>
++---------------+----------+
+| Column Name   | Type     |
++---------------+----------+
+| task_id       | int      |
+| employee_id   | int      |
+| start_time    | datetime |
+| end_time      | datetime |
++---------------+----------+
+(task_id, employee_id) is the primary key for this table.
+Each row in this table contains the task identifier, the employee identifier, and the start and end times of each task.
+</pre>
+<p>Write a solution to find the <strong>total duration</strong> of tasks for <strong>each</strong> employee and the <strong>maximum number of concurrent tasks</strong> an employee handled at <strong>any point in time</strong>. The total duration should be <strong>rounded down</strong> to the nearest number of <strong>full hours</strong>.</p>
+<p>Return <em>the result table ordered by</em>&nbsp;<code>employee_id</code><strong> <em>ascending</em></strong><em> order</em>.</p>
+<p>The result format is in the following example.</p>
+<p>&nbsp;</p>
+<p><strong class="example">Example:</strong></p>
+<div class="example-block">
+<p><strong>Input:</strong></p>
+<p>Tasks table:</p>
+<pre class="example-io">
++---------+-------------+---------------------+---------------------+
+| task_id | employee_id | start_time          | end_time            |
++---------+-------------+---------------------+---------------------+
+| 1       | 1001        | 2023-05-01 08:00:00 | 2023-05-01 09:00:00 |
+| 2       | 1001        | 2023-05-01 08:30:00 | 2023-05-01 10:30:00 |
+| 3       | 1001        | 2023-05-01 11:00:00 | 2023-05-01 12:00:00 |
+| 7       | 1001        | 2023-05-01 13:00:00 | 2023-05-01 15:30:00 |
+| 4       | 1002        | 2023-05-01 09:00:00 | 2023-05-01 10:00:00 |
+| 5       | 1002        | 2023-05-01 09:30:00 | 2023-05-01 11:30:00 |
+| 6       | 1003        | 2023-05-01 14:00:00 | 2023-05-01 16:00:00 |
++---------+-------------+---------------------+---------------------+
+</pre>
+<p><strong>Output:</strong></p>
+<pre class="example-io">
++-------------+------------------+----------------------+
+| employee_id | total_task_hours | max_concurrent_tasks |
++-------------+------------------+----------------------+
+| 1001        | 6                | 2                    |
+| 1002        | 2                | 2                    |
+| 1003        | 2                | 1                    |
++-------------+------------------+----------------------+
+</pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+	<li>For employee ID 1001:
+	<ul>
+		<li>Task 1 and Task 2 overlap from 08:30 to 09:00 (30 minutes).</li>
+		<li>Task 7 has a duration of 150 minutes (2 hours and 30 minutes).</li>
+		<li>Total task time: 60 (Task 1) + 120 (Task 2) + 60 (Task 3) + 150 (Task 7) - 30 (overlap) = 360 minutes = 6 hours.</li>
+		<li>Maximum concurrent tasks: 2 (during the overlap period).</li>
+	</ul>
+	</li>
+	<li>For employee ID 1002:
+	<ul>
+		<li>Task 4 and Task 5 overlap from 09:30 to 10:00 (30 minutes).</li>
+		<li>Total task time: 60 (Task 4) + 120 (Task 5) - 30 (overlap) = 150 minutes = 2 hours and 30 minutes.</li>
+		<li>Total task hours (rounded down): 2 hours.</li>
+		<li>Maximum concurrent tasks: 2 (during the overlap period).</li>
+	</ul>
+	</li>
+	<li>For employee ID 1003:
+	<ul>
+		<li>No overlapping tasks.</li>
+		<li>Total task time: 120 minutes = 2 hours.</li>
+		<li>Maximum concurrent tasks: 1.</li>
+	</ul>
+	</li>
+</ul>
+<p><b>Note:</b> Output table is ordered by employee_id in ascending order.</p>
+</div>
+<!-- description:end -->
+</section>
+<section id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Link to this heading"></a></h2>
+<!-- solution:start -->
+<section id="solution-1-merge-join">
+<h3>Solution 1: Merge + Join<a class="headerlink" href="#solution-1-merge-join" title="Link to this heading"></a></h3>
+<p>First, we merge the <code class="docutils literal notranslate"><span class="pre">start_time</span></code> and <code class="docutils literal notranslate"><span class="pre">end_time</span></code> for each <code class="docutils literal notranslate"><span class="pre">employee_id</span></code> into a new table <code class="docutils literal notranslate"><span class="pre">T</span></code>. Then, using the <code class="docutils literal notranslate"><span class="pre">LEAD</span></code> function, we calculate the start time of the next task for each employee. Next, we join table <code class="docutils literal notranslate"><span class="pre">T</span></code> with the <code class="docutils literal notranslate"><span class="pre">Tasks</span></code> table to compute the concurrent task count for each employee. Finally, we group by <code class="docutils literal notranslate"><span class="pre">employee_id</span></code> to calculate the total task duration and the maximum concurrent tasks for each employee.</p>
+<p>Similar Problem:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/doocs/leetcode/blob/main/solution/3200-3299/3268.Find%20Overlapping%20Shifts%20II/README_EN.md" rel="noreferrer" target="_blank">3268. Find Overlapping Shifts II 🔒 <svg version="1.1" width="1.0em" height="1.0em" viewBox="0 0 16 16" aria-hidden="true" style="display: inline-block; vertical-align: middle; fill: currentColor;"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg></a></p></li>
+</ul>
+<!-- tabs:start -->
+<section id="mysql">
+<h4>MySQL<a class="headerlink" href="#mysql" title="Link to this heading"></a></h4>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">statement</span><span class="w"> </span><span class="n">below</span>
+<span class="k">WITH</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">start_time</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">st</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Tasks</span>
+<span class="w">        </span><span class="k">UNION</span><span class="w"> </span><span class="k">DISTINCT</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">end_time</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">st</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Tasks</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">P</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="o">*</span><span class="p">,</span>
+<span class="w">            </span><span class="n">LEAD</span><span class="p">(</span><span class="n">st</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">                </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee_id</span>
+<span class="w">                </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">st</span>
+<span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ed</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">T</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">S</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">P</span><span class="p">.</span><span class="o">*</span><span class="p">,</span>
+<span class="w">            </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">concurrent_count</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">P</span>
+<span class="w">            </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Tasks</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">employee_id</span><span class="p">)</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">P</span><span class="p">.</span><span class="n">st</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">Tasks</span><span class="p">.</span><span class="n">start_time</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">P</span><span class="p">.</span><span class="n">ed</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">Tasks</span><span class="p">.</span><span class="n">end_time</span>
+<span class="w">        </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">employee_id</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FLOOR</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">TIME_TO_SEC</span><span class="p">(</span><span class="n">TIMEDIFF</span><span class="p">(</span><span class="n">ed</span><span class="p">,</span><span class="w"> </span><span class="n">st</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">3600</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_task_hours</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">concurrent_count</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">max_concurrent_tasks</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">S</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<!-- tabs:end -->
+<!-- solution:end -->
+<!-- problem:end -->
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, youmoula.com。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
